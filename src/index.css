@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: sans-serif;
+  user-select: none; /* Запрещаем выделение текста на всей странице */
+}
+
+@keyframes float {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+
+/* Базовые стили */
+.buttonvivod-button {
+  width: 200px;
+  height: 50px;
+  font-size: 1.8rem;
+}
+
+.navigat button {
+  font-size: 0.9rem;
+}
+
+/* Медиа-запросы для адаптации */
+@media (max-width: 640px) {
+  .buttonvivod-button {
+    width: 150px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .navigat button {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .buttonvivod-button {
+    width: 120px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+
+  .navigat button {
+    font-size: 0.7rem;
+  }
+}
+
+
+
+.bg-gradient-overlay {
+  background: #EDC448;
+}
+
+.radial-gradient-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+   /*background: radial-gradient(circle, rgb(36, 157, 140) 0%, rgba(250, 214, 92, 0) 60%);*/
+}
+
+.background-kashtan{
+  height: 68%;
+  width: 100%;
+  top: 13%;
+  z-index: 1;
+  background-color: #279E8B;
+  border-radius: 40px;
+
+}
+
+.background-purple{
+  height: 33%;
+  width: 100%;
+  top: 67%;
+  z-index: 0;
+  background: #ffffff;
+}
+
+.block-energy{
+border: 10px solid #FCAC17;
+background-color: #FCAC17;
+border-radius: 18px;
+margin-top: -35px;
+}
+.navigat{
+  justify-content: center;
+}
+
+.buttonvivod-button {
+  background: #EDC448;
+  border: 10px solid #EDC448;
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  bottom: -140%; /* Устанавливаем положение в процентах от нижней границы родителя */
+  left: 50%; /* Центрируем кнопку по горизонтали */
+  transform: translateX(-50%); /* Смещаем на половину ширины для центрирования */
+  display: flex;
+  justify-content: center;
+  align-items: center ; /* Центрирование по вертикали */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Добавление тени для улучшения визуального восприятия */
+}
+
+.buttonvivod-button p {
+  font-weight: bold;
+   font-size: 1.8rem;
+}
+
+
+.toolbar{
+  margin-top: 1rem;
+}
+
+.border-energy{
+  border: 5px solid #4b3b3b;
+  margin-top: -40px;
+}
+
+.notc-width{
+  width: 100%;
+}
+
+.textcolor-black{
+  color: #fff;
+}
+
+/*.textcolor-black{*/
+/*  color: block;*/
+/*  font-size: 15px;*/
+/*}*/
+
+
+.txt-size {
+  font-size: 3rem;
+}
+
+.margintext-top{
+  bottom: 10%; /* Устанавливаем положение в процентах от нижней границы родителя */
+  /*margin-top: 10px;*/
+  position: absolute;
+}
+
+.farmer-number{
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  top:3.3rem;
+  left:4.9rem;
+}
+
+.notc-block{
+  display: flex;
+  justify-content: center;
+}
+
+.notcoin-block{
+  flex-grow: 0.6;
+}
+
+img {
+  /* user-drag: none; для WebKit */
+  user-select: none; /* стандарт */
+  -moz-user-select: none; /* для Firefox */
+  -webkit-user-drag: none; /* для WebKit (особенно для Safari) */
+  -webkit-user-select: none; /* для Safari */
+  -ms-user-select: none; /* для Internet Explorer и Edge Legacy */
+  pointer-events: none; /* запретить любые события мыши */
+}
+
+
+/*.navigatblock {*/
+/*  background: rgba(0, 0, 0, 0.7); !* Добавляем полупрозрачный фон *!*/
+/*}*/
+
+.navigat {
+  background: #249D8C;
+  padding: 0.4rem; /* Добавляем внутренний отступ */
+  border-radius: 1.5rem; /* Увеличиваем радиус скругления */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+}
+
+.navigat button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem; /* Добавляем отступ между иконкой и текстом */
+  transition: transform 0.2s ease-in-out; /* Добавляем анимацию */
+}
+
+.navigat button:hover {
+  transform: scale(1.6); /* Увеличиваем размер при наведении */
+}
+
+.navigat img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%; /* Делаем иконки круглыми */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для иконок */
+}
+
+.navigat span {
+  color: white;
+  font-weight: 500;
+  font-size: 0.9rem; /* Устанавливаем размер текста */
+}
