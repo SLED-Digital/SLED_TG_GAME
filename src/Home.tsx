@@ -179,7 +179,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 w-full px-8 pb-8 z-22 navigatblock">
+        <div className="fixed bottom-0 left-0 w-full px-3 pb-3 z-22 navigatblock">
           <div className="w-full flex justify-between gap-2 navigat">
             <div className="flex-grow flex items-center max-w-80 text-sm">
               <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">

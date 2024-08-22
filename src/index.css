@@ -33,7 +33,7 @@ body {
 }
 
 .navigat button {
-  font-size: 0.9rem;
+  font-size: 0.6rem;
 }
 
 /* Медиа-запросы для адаптации */
@@ -45,7 +45,7 @@ body {
   }
 
   .navigat button {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
   }
 }
 
@@ -57,7 +57,7 @@ body {
   }
 
   .navigat button {
-    font-size: 0.7rem;
+    font-size: 0.5rem;
   }
 }
 
@@ -134,7 +134,7 @@ margin-top: -35px;
 }
 
 .notc-width{
-  width: 100%;
+  width: 80%;
 }
 
 .textcolor-black{
@@ -211,12 +211,12 @@ img {
 .navigat img {
   width: 32px;
   height: 32px;
-  border-radius: 50%; /* Делаем иконки круглыми */
+  border-radius: 30%; /* Делаем иконки круглыми */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для иконок */
 }
 
 .navigat span {
   color: white;
-  font-weight: 500;
-  font-size: 0.9rem; /* Устанавливаем размер текста */
+  font-weight: 300;
+  font-size: 0.6rem; /* Устанавливаем размер текста */
 }
