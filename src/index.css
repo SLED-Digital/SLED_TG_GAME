@@ -64,7 +64,7 @@ body {
 
 
 .bg-gradient-overlay {
-  background: #EDC448;
+  background: linear-gradient(to bottom, rgb(229, 124, 103), #e19986);
 }
 
 .radial-gradient-overlay {
@@ -98,6 +98,7 @@ background-color: #FCAC17;
 border-radius: 18px;
 margin-top: -35px;
 }
+
 .navigat{
   justify-content: center;
 }
@@ -129,23 +130,18 @@ margin-top: -35px;
 }
 
 .border-energy{
-  border: 5px solid #4b3b3b;
   margin-top: -40px;
 }
 
+
 .notc-width{
-  width: 80%;
+  width: 70%;
 }
 
 .textcolor-black{
   color: #fff;
+  font-size: 20px;
 }
-
-/*.textcolor-black{*/
-/*  color: block;*/
-/*  font-size: 15px;*/
-/*}*/
-
 
 .txt-size {
   font-size: 3rem;
@@ -170,7 +166,7 @@ margin-top: -35px;
   justify-content: center;
 }
 
-.notcoin-block{
+.clicker-button{
   flex-grow: 0.6;
 }
 

@@ -153,22 +153,22 @@ const Home = () => {
             <div className="flex items-center justify-center">
               <div className="ml-2 text-left farmer-number">
                 <span className="text-white text-2xl font-bold block textcolor-black">{energy}</span>
-                <span className="text-white text-large opacity-75 textcolor-black">/ 500</span>
+                <span className="text-white text-large opacity-65 textcolor-black">/ 500</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex-grow flex items-center justify-center notcoin-block relative">
+        <div className="flex-grow flex items-center justify-center clicker-button relative">
           <div className="relative mt-4 notc-block" onClick={handleClick}>
-            <img src={notcoin} width={768} height={768} alt="notcoin" className="notc-width" />
+            <img src={notcoin} width={528} height={528} alt="notcoin" className="notc-width" />
             {clicks.map((click) => (
               <div
                 key={click.id}
                 className="absolute text-5xl font-bold opacity-0"
                 style={{
-                  top: `${click.y - 126}px`, // 42px * 3
-                  left: `${click.x - 84}px`, // 28px * 3
+                  top: `${click.y - 42}px`, // 42px * 3
+                  left: `${click.x - 28}px`, // 28px * 3
                   animation: `float 1s ease-out`
                 }}
                 onAnimationEnd={() => handleAnimationEnd(click.id)}
