@@ -2,9 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  height: 100%;
+  overflow: hidden; /* Запрещаем прокрутку */
+}
+
 body {
   font-family: sans-serif;
   user-select: none; /* Запрещаем выделение текста на всей странице */
+  background-color: #279E8B; /* Устанавливаем цвет фона */
 }
 
 @keyframes float {
@@ -68,22 +74,22 @@ body {
    /*background: radial-gradient(circle, rgb(36, 157, 140) 0%, rgba(250, 214, 92, 0) 60%);*/
 }
 
-.background-kashtan{
-  height: 68%;
-  width: 100%;
-  top: 13%;
-  z-index: 1;
-  background-color: #279E8B;
-  border-radius: 40px;
-
-}
-
 .background-purple{
   height: 33%;
   width: 100%;
   top: 67%;
   z-index: 0;
   background: #ffffff;
+}
+
+.background-kashtan{
+  height: 65%;
+  width: 100%;
+  top: 15%;
+  z-index: 1;
+  background-color: #279E8B;
+  border-radius: 40px;
+
 }
 
 .block-energy{
