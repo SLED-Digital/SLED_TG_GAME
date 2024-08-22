@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { bear, coin, highVoltage, notcoin, rocket } from './images';
 
@@ -12,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (energy - energyToReduce < 0) {
       return;
     }
@@ -27,12 +27,12 @@ const Home = () => {
     setEnergy(newEnergy);
     updateUserInLocalStorage(newPoints, newEnergy);
 
-    setClicks([...clicks, { id: Date.now(), x, y }]);
-  };
+    setClicks((prevClicks) => [...prevClicks, { id: Date.now(), x, y }]);
+  }, [energy, points, energyToReduce, pointsToAdd]);
 
-  const handleAnimationEnd = (id: number) => {
+  const handleAnimationEnd = useCallback((id: number) => {
     setClicks((prevClicks) => prevClicks.filter(click => click.id !== id));
-  };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -167,13 +167,13 @@ const Home = () => {
                 key={click.id}
                 className="absolute text-5xl font-bold opacity-0"
                 style={{
-                  top: `${click.y - 42}px`, // 42px * 3
-                  left: `${click.x - 28}px`, // 28px * 3
+                  top: `${click.y - 21}px`, // Уменьшаем позицию, так как картинка будет меньше
+                  left: `${click.x - 14}px`, // Уменьшаем позицию, так как картинка будет меньше
                   animation: `float 1s ease-out`
                 }}
                 onAnimationEnd={() => handleAnimationEnd(click.id)}
               >
-                10
+                <img src={notcoin} width={56*0.8} height={56*0.8} alt="Coin" style={{ filter: 'invert(1)' }} />
               </div>
             ))}
           </div>
