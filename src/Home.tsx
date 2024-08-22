@@ -12,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (energy - energyToReduce < 0) {
       return;
     }
@@ -160,7 +160,7 @@ const Home = () => {
         </div>
 
         <div className="flex-grow flex items-center justify-center clicker-button relative">
-          <div className="relative mt-4 notc-block" onClick={handleClick}>
+          <div className="relative mt-4 notc-block" onPointerDown={handlePointerDown}>
             <img src={notcoin} width={528} height={528} alt="notcoin" className="notc-width" />
             {clicks.map((click) => (
               <div
