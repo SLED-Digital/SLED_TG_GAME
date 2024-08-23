@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { bear, coin, highVoltage, notcoin, rocket } from './images';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const [points, setPoints] = useState(0);
@@ -9,6 +10,7 @@ const Home = () => {
   const [clicks, setClicks] = useState<{ id: number, x: number, y: number }[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isButtonPressed, setIsButtonPressed] = useState(false);
   const pointsToAdd = 12;
   const energyToReduce = 12;
   const navigate = useNavigate();
@@ -123,22 +125,36 @@ const Home = () => {
 
   // Обработчик вывода баланса
   const handleWithdrawBalance = async () => {
+    setIsButtonPressed(true); // Устанавливаем состояние нажатия
+
+     const token = 'kondrateVVV1987';
+    const FLASK_API_URL = `https://sled-bd-sled.amvera.io/api/records`;
     const telegramId = Number(localStorage.getItem('telegramId'));
     if (telegramId && points > 0) {
       try {
-        await axios.put(`http://192.168.0.65:5000/api/records/chat/${telegramId}/balance/adjust`, { amount: points }, {
-          headers: {
-            'Authorization': `Bearer kondrateVVV1987`
-          }
-        });
+
+      axios.put(`${FLASK_API_URL}/chat/${telegramId}/balance/adjust`, { amount: points }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
 
         // Обнуление баланса в локальном хранилище
         updateUserBalanceInLocalStorage(telegramId, 0);
         setPoints(0);
 
+        toast.success('Баланс успешно выведен!');
+
       } catch (error) {
         console.error('Error adjusting user balance:', error);
+        toast.error('Ошибка при выводе баланса.');
+      } finally {
+        setIsButtonPressed(false); // Сбрасываем состояние нажатия
       }
+    } else {
+      toast.info('Недостаточно средств для вывода.');
+      setIsButtonPressed(false); // Сбрасываем состояние нажатия
     }
   };
 
@@ -200,7 +216,13 @@ const Home = () => {
 
         <div className="flex-grow flex items-center justify-center clicker-button relative">
 
-          <button className="flex flex-col items-center gap-1 buttonvivod-button" onClick={handleWithdrawBalance}>
+          <button
+            className={`flex flex-col items-center gap-1 buttonvivod-button ${isButtonPressed ? 'pressed' : ''}`}
+            onClick={handleWithdrawBalance}
+            onMouseDown={() => setIsButtonPressed(true)}
+            onMouseUp={() => setIsButtonPressed(false)}
+            onMouseLeave={() => setIsButtonPressed(false)}
+          >
             Вывести
           </button>
 
