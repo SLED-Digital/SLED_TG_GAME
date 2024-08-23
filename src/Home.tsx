@@ -127,18 +127,24 @@ const Home = () => {
   const handleWithdrawBalance = async () => {
     setIsButtonPressed(true); // Устанавливаем состояние нажатия
 
-     const token = 'kondrateVVV1987';
+    const token = 'kondrateVVV1987';
     const FLASK_API_URL = `https://sled-bd-sled.amvera.io/api/records`;
     const telegramId = Number(localStorage.getItem('telegramId'));
+
+    if (points < 500) {
+      toast.info('Недостаточно средств для вывода. Требуется минимум 15000 баллов.');
+      setIsButtonPressed(false); // Сбрасываем состояние нажатия
+      return;
+    }
+
     if (telegramId && points > 0) {
       try {
-
-      axios.put(`${FLASK_API_URL}/chat/${telegramId}/balance/adjust`, { amount: points }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
+        await axios.put(`${FLASK_API_URL}/chat/${telegramId}/balance/adjust`, { amount: ~~(points/500) }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
         // Обнуление баланса в локальном хранилище
         updateUserBalanceInLocalStorage(telegramId, 0);
