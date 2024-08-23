@@ -2,17 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Основные настройки */
 html, body {
   height: 100%;
-  overflow: hidden; /* Запрещаем прокрутку */
-}
-
-body {
+  overflow: hidden;
+  background-color: #279E8B; /* Основной фон */
   font-family: sans-serif;
-  user-select: none; /* Запрещаем выделение текста на всей странице */
-  background-color: #279E8B; /* Устанавливаем цвет фона */
+  user-select: none;
 }
 
+img {
+  user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+}
+
+/* Анимации */
 @keyframes float {
   0% {
     opacity: 1;
@@ -24,57 +31,36 @@ body {
   }
 }
 
-
-/* Базовые стили */
-.buttonvivod-button {
-  width: 200px;
-  height: 50px;
-  font-size: 1.8rem;
-}
-
-.navigat button {
-  font-size: 0.6rem;
-}
-
-/* Медиа-запросы для адаптации */
-@media (max-width: 640px) {
-  .buttonvivod-button {
-    width: 150px;
-    height: 40px;
-    font-size: 1.5rem;
+@keyframes clickAnimation {
+  0% {
+    transform: scale(1);
   }
-
-  .navigat button {
-    font-size: 0.6rem;
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
-@media (max-width: 480px) {
-  .buttonvivod-button {
-    width: 120px;
-    height: 35px;
-    font-size: 1.2rem;
-  }
-
-  .navigat button {
-    font-size: 0.5rem;
-  }
+.click-animation {
+  animation: clickAnimation 0.3s ease-out;
 }
 
-
-
+/* Градиенты */
 .bg-gradient-overlay {
-  background: linear-gradient(to bottom, rgb(229, 124, 103), #e19986);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1));
 }
 
 .radial-gradient-overlay {
   position: absolute;
   width: 100%;
   height: 100%;
-   /*background: radial-gradient(circle, rgb(36, 157, 140) 0%, rgba(250, 214, 92, 0) 60%);*/
+  background: radial-gradient(circle, rgba(36, 157, 140, 1) 0%, rgba(250, 214, 92, 0) 60%);
 }
 
-.background-purple{
+/* Блоки */
+.background-purple {
   height: 33%;
   width: 100%;
   top: 67%;
@@ -82,138 +68,188 @@ body {
   background: #ffffff;
 }
 
-.background-kashtan{
-  height: 65%;
+.background-kashtan {
+  height: 100%;
   width: 100%;
   top: 15%;
   z-index: 1;
   background-color: #279E8B;
   border-radius: 40px;
-
 }
 
-.block-energy{
-border: 10px solid #FCAC17;
-background-color: #FCAC17;
-border-radius: 18px;
-margin-top: -35px;
-}
-
-.navigat{
-  justify-content: center;
+.block-energy {
+  border: 10px solid #FCAC17;
+  background-color: #FCAC17;
+  border-radius: 18px;
+  margin-top: -35px;
 }
 
 .buttonvivod-button {
   background: #EDC448;
-  border: 10px solid #EDC448;
+  border: none;
   width: 200px;
   height: 50px;
   position: absolute;
-  bottom: -140%; /* Устанавливаем положение в процентах от нижней границы родителя */
-  left: 50%; /* Центрируем кнопку по горизонтали */
-  transform: translateX(-50%); /* Смещаем на половину ширины для центрирования */
+  bottom: 100px; /* Отступ от нижней части .background-kashtan */
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  align-items: center ; /* Центрирование по вертикали */
+  align-items: center;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Добавление тени для улучшения визуального восприятия */
-}
-
-.buttonvivod-button p {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   font-weight: bold;
-   font-size: 1.8rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
 }
 
+.button-vivod:hover {
+  background: #e0ab38;
+  transform: scale(1.05);
+}
 
-.toolbar{
+.clicker-button{
+  z-index: 100;
+
+}
+
+.button-vivod:active {
+  background: #d39e32;
+}
+
+/*!* Навигация *!*/
+/*.navigatblock {*/
+/*  background: #011d16; !* Более тёмный цвет *!*/
+/*  padding: 0.4rem;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*!* Убираем обводку у блока навигации *!*/
+/*.navigatblock button {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  gap: 0.5rem;*/
+/*  transition: transform 0.2s ease-in-out;*/
+/*}*/
+
+/*.navigatblock button:hover {*/
+/*  transform: scale(1.4);*/
+/*}*/
+
+/*.navigatblock img {*/
+/*  width: 32px;*/
+/*  height: 32px;*/
+/*  border-radius: 30%;*/
+/*  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
+/*}*/
+
+/*.navigatblock span {*/
+/*  color: white;*/
+/*  font-weight: 300;*/
+/*  font-size: 0.6rem;*/
+/*}*/
+
+/* Адаптивные стили */
+@media (max-width: 640px) {
+  .button-vivod {
+    width: 150px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .navigatblock button {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .button-vivod {
+    width: 120px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
+
+  .navigatblock button {
+    font-size: 0.5rem;
+  }
+}
+
+/* Дополнительные стили */
+.toolbar {
   margin-top: 1rem;
 }
 
-.border-energy{
+.border-energy {
   margin-top: -60px;
 }
 
-
-.notc-width{
+.notc-click-area {
   width: 70%;
 }
 
-.textcolor-black{
-  color: #fff;
+.textcolor-black {
+  color: #000000;
   font-size: 20px;
-  margin-top: -10px;
+  margin-top: -12px;
 }
 
 .txt-size {
   font-size: 3rem;
 }
 
-.margintext-top{
-  bottom: 10%; /* Устанавливаем положение в процентах от нижней границы родителя */
-  /*margin-top: 10px;*/
+.margintext-top {
+  bottom: 40%;
   position: absolute;
 }
 
-.farmer-number{
+.farmer-number {
   display: inline-flex;
   align-items: center;
   position: absolute;
-  top:3.3rem;
-  left:4.9rem;
+  top: 3.3rem;
+  left: 4.9rem;
 }
 
-.notc-block{
+.notc-block {
   display: flex;
   justify-content: center;
 }
 
-.clicker-button{
+.clicker-button {
   flex-grow: 0.6;
 }
 
-img {
-  /* user-drag: none; для WebKit */
-  user-select: none; /* стандарт */
-  -moz-user-select: none; /* для Firefox */
-  -webkit-user-drag: none; /* для WebKit (особенно для Safari) */
-  -webkit-user-select: none; /* для Safari */
-  -ms-user-select: none; /* для Internet Explorer и Edge Legacy */
-  pointer-events: none; /* запретить любые события мыши */
+.justify-around{
+  background: #298a7a;
 }
 
-
-/*.navigatblock {*/
-/*  background: rgba(0, 0, 0, 0.7); !* Добавляем полупрозрачный фон *!*/
-/*}*/
-
-.navigat {
-  background: #249D8C;
-  padding: 0.4rem; /* Добавляем внутренний отступ */
-  border-radius: 1.5rem; /* Увеличиваем радиус скругления */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень */
-}
-
+/* Удаление обводки */
 .navigat button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem; /* Добавляем отступ между иконкой и текстом */
-  transition: transform 0.2s ease-in-out; /* Добавляем анимацию */
+  gap: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+  border: none; /* Удаление обводки */
 }
 
 .navigat button:hover {
-  transform: scale(1.6); /* Увеличиваем размер при наведении */
+  transform: scale(1.4);
 }
 
 .navigat img {
   width: 32px;
   height: 32px;
-  border-radius: 30%; /* Делаем иконки круглыми */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Добавляем тень для иконок */
+  border-radius: 30%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .navigat span {
   color: white;
   font-weight: 300;
-  font-size: 0.6rem; /* Устанавливаем размер текста */
+  font-size: 0.6rem;
 }
