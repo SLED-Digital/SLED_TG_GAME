@@ -262,16 +262,15 @@ const Home = () => {
           <div className="w-full flex justify-between gap-2 navigat">
             <div className="flex-grow flex items-center max-w-80 text-sm">
               <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
-                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/earn')}>
-                  <img src={coin} width={24} height={24} alt="Earn" />
-                </button>
                 <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/frens')}>
                   <img src={bear} width={24} height={24} alt="Frens" />
+                </button>
+                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/')}>
+                  <img src={coin} width={24} height={24} alt="Home" />
                 </button>
                 <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
                   <img src={rocket} width={24} height={24} alt="Boosts" />
                 </button>
-
               </div>
             </div>
           </div>

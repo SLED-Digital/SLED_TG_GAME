@@ -1,128 +1,120 @@
-import { useNavigate } from 'react-router-dom';
-import { bear, coin, highVoltage, rocket } from './images';
-import { FacebookShareButton, TwitterShareButton, TelegramShareButton, VKShareButton } from 'react-share';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { bear, coin, rocket } from './images';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
-// Страница Frens
-const FrensPage = () => {
+const Frens = () => {
+  const [inviteLink, setInviteLink] = useState('');
   const navigate = useNavigate();
-  const [shareUrl, setShareUrl] = useState('');
+  const location = useLocation();
 
-  const handleBackToHome = () => {
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const inviteCode = searchParams.get('invite');
     const telegramId = localStorage.getItem('telegramId');
-    if (telegramId) {
-      navigate(`/?telegramId=${telegramId}`);
-    } else {
-      navigate('/');
+
+    if (inviteCode) {
+      // Отправка запроса на сервер для начисления награды за приглашение
+      axios.post('/api/invite', { inviteCode, telegramId })
+        .then(response => {
+          toast.success('You joined via invite link! The inviter will receive a reward.');
+        })
+        .catch(error => {
+          console.error('Error joining via invite link:', error);
+          toast.error('Error joining via invite link.');
+        });
     }
+
+    // Генерация уникальной инвайт-ссылки для текущего игрока
+    const uniqueInviteLink = `${window.location.origin}/frens?invite=${telegramId}`;
+    setInviteLink(uniqueInviteLink);
+  }, [location]);
+
+  const handleShareToMessenger = (platform) => {
+    if (!inviteLink) {
+      toast.error('Invite link is not set.');
+      return;
+    }
+
+    let shareUrl = '';
+    switch (platform) {
+      case 'telegram':
+        shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}`;
+        break;
+      case 'whatsapp':
+        shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(inviteLink)}`;
+        break;
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(inviteLink)}`;
+        break;
+      default:
+        toast.error('Unsupported platform.');
+        return;
+    }
+
+    window.open(shareUrl, '_blank');
   };
 
-  const handleInviteToTelegram = () => {
+  const handleButtonClick = (path) => {
     const telegramId = localStorage.getItem('telegramId');
-    if (telegramId) {
-      const inviteCode = `invite_code_${telegramId}`;
-      const inviteLink = `https://t.me/your_telegram_bot?start=${inviteCode}`;
-      window.open(inviteLink, '_blank');
-    } else {
-      alert('Telegram ID не найден. Пожалуйста, авторизуйтесь снова.');
-    }
-  };
-
-  const handleGenerateShareLink = () => {
-    const telegramId = localStorage.getItem('telegramId');
-    if (telegramId) {
-      const shareLink = `https://yourdomain.com/share?ref=${telegramId}`;
-      setShareUrl(shareLink);
-    } else {
-      alert('Telegram ID не найден. Пожалуйста, авторизуйтесь снова.');
-    }
+    navigate(`${path}?telegramId=${telegramId}`);
   };
 
   return (
     <div className="bg-gradient-main min-h-screen px-4 flex flex-col items-center text-white font-medium">
       <div className="absolute inset-0 h-1/2 bg-gradient-overlay z-0"></div>
+      <div className="absolute top background-kashtan flex flex-col items-center justify-center">
+        <div className="mt-12 text-5xl font-bold flex items-center margintext-top">
+          <img src={bear} width={39} height={44} />
+          <span className="ml-2 txt-size">Frens</span>
+        </div>
+      </div>
+      <div className="absolute top background-purple"></div>
+
       <div className="absolute inset-0 flex items-center justify-center z-0">
         <div className="radial-gradient-overlay"></div>
       </div>
 
       <div className="w-full z-10 min-h-screen flex flex-col items-center text-white">
-        <div className="fixed top-0 left-0 w-full px-4 pt-8 z-10 flex flex-col items-center text-white">
-          <div className="w-full cursor-pointer">
-            <div className="bg-[#1f1f1f] text-center py-2 rounded-xl">
-              <p className="text-lg">Frens Page</p>
-            </div>
-          </div>
-        </div>
-
         <div className="flex-grow flex items-center justify-center">
-          <div className="relative mt-4 flex flex-col items-center">
-            <img src={bear} width={256} height={256} alt="bear" />
+          <div className="flex flex-col items-center gap-4">
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  className="w-full p-2 rounded-lg bg-gray-800 text-white"*/}
+            {/*  placeholder="Your invite link"*/}
+            {/*  value={inviteLink}*/}
+            {/*  readOnly*/}
+            {/*/>*/}
             <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-              onClick={handleInviteToTelegram}
+              className="w-full p-2 rounded-lg bg-blue-500 text-white"
+              onClick={() => handleShareToMessenger('telegram')}
             >
-              Пригласить в Telegram
+              Share to Telegram
             </button>
-            <button
-              className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg"
-              onClick={handleGenerateShareLink}
-            >
-              Поделиться уникальной ссылкой
-            </button>
-            {shareUrl && (
-              <div className="mt-4">
-                <FacebookShareButton url={shareUrl}>
-                  <button className="mr-2 px-4 py-2 bg-blue-600 text-white rounded-lg">Facebook</button>
-                </FacebookShareButton>
-                <TwitterShareButton url={shareUrl}>
-                  <button className="mr-2 px-4 py-2 bg-blue-400 text-white rounded-lg">Twitter</button>
-                </TwitterShareButton>
-                <TelegramShareButton url={shareUrl}>
-                  <button className="mr-2 px-4 py-2 bg-blue-500 text-white rounded-lg">Telegram</button>
-                </TelegramShareButton>
-                <VKShareButton url={shareUrl}>
-                  <button className="px-4 py-2 bg-blue-300 text-white rounded-lg">VK</button>
-                </VKShareButton>
-              </div>
-            )}
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 w-full px-4 pb-4 z-10">
-          <div className="w-full flex justify-between gap-2">
-            <div className="w-1/3 flex items-center justify-start max-w-32">
-              <div className="flex items-center justify-center">
-                <img src={highVoltage} width={44} height={44} alt="High Voltage" />
-                <div className="ml-2 text-left">
-                  <span className="text-white text-2xl font-bold block">100</span>
-                  <span className="text-white text-large opacity-75">/ 6500</span>
-                </div>
-              </div>
-            </div>
-            <div className="flex-grow flex items-center max-w-60 text-sm">
-              <div className="w-full bg-[#fad258] py-4 rounded-2xl flex justify-around">
-                <button className="flex flex-col items-center gap-1" onClick={() => navigate('/earn')}>
+        <div className="fixed bottom-0 left-0 w-full px-3 pb-3 z-22 navigatblock">
+          <div className="w-full flex justify-between gap-2 navigat">
+            <div className="flex-grow flex items-center max-w-80 text-sm">
+              <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
+                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/earn')}>
                   <img src={coin} width={24} height={24} alt="Earn" />
-                  <span>Earn</span>
                 </button>
-                <div className="h-[48px] w-[2px] bg-[#fddb6d]"></div>
-                <button className="flex flex-col items-center gap-1" onClick={() => navigate('/boosts')}>
+                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/frens')}>
+                  <img src={bear} width={24} height={24} alt="Frens" />
+                </button>
+                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
                   <img src={rocket} width={24} height={24} alt="Boosts" />
-                  <span>Boosts</span>
                 </button>
               </div>
             </div>
           </div>
-          <button
-            className="w-full mt-4 py-2 bg-blue-500 text-white rounded-xl"
-            onClick={handleBackToHome}
-          >
-            Назад на главную
-          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default FrensPage;
+export default Frens;
