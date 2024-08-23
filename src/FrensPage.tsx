@@ -14,12 +14,13 @@ const Frens = () => {
     const inviteCode = searchParams.get('invite');
     const telegramId = localStorage.getItem('telegramId');
 
-    if (inviteCode) {
+    if (inviteCode && telegramId) {
       // Отправка запроса на сервер для начисления награды за приглашение
       axios.post('/api/invite', { inviteCode, telegramId })
-        .then(response => {
-          toast.success('You joined via invite link! The inviter will receive a reward.');
-        })
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // .then(response => {
+        //   toast.success('You joined via invite link! The inviter will receive a reward.');
+        // })
         .catch(error => {
           console.error('Error joining via invite link:', error);
           toast.error('Error joining via invite link.');
@@ -27,11 +28,13 @@ const Frens = () => {
     }
 
     // Генерация уникальной инвайт-ссылки для текущего игрока
-    const uniqueInviteLink = `${window.location.origin}/frens?invite=${telegramId}`;
-    setInviteLink(uniqueInviteLink);
+    if (telegramId) {
+      const uniqueInviteLink = `${window.location.origin}/frens?invite=${telegramId}`;
+      setInviteLink(uniqueInviteLink);
+    }
   }, [location]);
 
-  const handleShareToMessenger = (platform) => {
+  const handleShareToMessenger = (platform: string) => {
     if (!inviteLink) {
       toast.error('Invite link is not set.');
       return;
@@ -56,7 +59,7 @@ const Frens = () => {
     window.open(shareUrl, '_blank');
   };
 
-  const handleButtonClick = (path) => {
+  const handleButtonClick = (path: string) => {
     const telegramId = localStorage.getItem('telegramId');
     navigate(`${path}?telegramId=${telegramId}`);
   };
@@ -79,13 +82,13 @@ const Frens = () => {
       <div className="w-full z-10 min-h-screen flex flex-col items-center text-white">
         <div className="flex-grow flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  className="w-full p-2 rounded-lg bg-gray-800 text-white"*/}
-            {/*  placeholder="Your invite link"*/}
-            {/*  value={inviteLink}*/}
-            {/*  readOnly*/}
-            {/*/>*/}
+            <input
+              type="text"
+              className="w-full p-2 rounded-lg bg-gray-800 text-white"
+              placeholder="Your invite link"
+              value={inviteLink}
+              readOnly
+            />
             <button
               className="w-full p-2 rounded-lg bg-blue-500 text-white"
               onClick={() => handleShareToMessenger('telegram')}
