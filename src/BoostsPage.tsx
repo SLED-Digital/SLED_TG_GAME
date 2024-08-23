@@ -42,7 +42,7 @@ const BoostPage = () => {
         </div>
 
         <div className="flex-grow flex items-center justify-center">
-          <div className="relative mt-4 flex flex-col items-center">
+          <div className="relative mt-6 flex flex-col items-center">
             <img src={rocket} width={256} height={256} alt="rocket" />
             {boostsData.map(boost => (
               <button
