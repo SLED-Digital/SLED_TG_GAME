@@ -129,10 +129,6 @@ const Home = () => {
       <div className="absolute inset-0 h-1/2 bg-gradient-overlay z-0"></div>
       <div className="absolute top background-kashtan flex flex-col items-center justify-center">
 
-        <button className="flex flex-col items-center gap-1 buttonvivod-button" onClick={() => handleButtonClick('/withdraw')}>
-          вывести
-          </button>
-
         <div className="mt-12 text-5xl font-bold flex items-center margintext-top">
           <img src={coin} width={39} height={44} />
           <span className="ml-2 txt-size">{points.toLocaleString()}</span>
@@ -172,7 +168,9 @@ const Home = () => {
 
         <div className="flex-grow flex items-center justify-center clicker-button relative">
 
-
+          <button className="flex flex-col items-center gap-1 buttonvivod-button" onClick={() => handleButtonClick('/withdraw')}>
+          вывести
+          </button>
 
           <div className="relative mt-4 notc-block" onPointerDown={handlePointerDown}>
             <img
