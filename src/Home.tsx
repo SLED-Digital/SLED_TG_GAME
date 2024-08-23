@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { bear, coin, highVoltage, notcoin, rocket } from './images';
+import axios from 'axios';
 
 const Home = () => {
   const [points, setPoints] = useState(0);
@@ -120,6 +121,37 @@ const Home = () => {
     }
   };
 
+  // Обработчик вывода баланса
+  const handleWithdrawBalance = async () => {
+    const telegramId = Number(localStorage.getItem('telegramId'));
+    if (telegramId && points > 0) {
+      try {
+        await axios.put(`http://192.168.0.65:5000/api/records/chat/${telegramId}/balance/adjust`, { amount: points }, {
+          headers: {
+            'Authorization': `Bearer kondrateVVV1987`
+          }
+        });
+
+        // Обнуление баланса в локальном хранилище
+        updateUserBalanceInLocalStorage(telegramId, 0);
+        setPoints(0);
+
+      } catch (error) {
+        console.error('Error adjusting user balance:', error);
+      }
+    }
+  };
+
+  // Обновление баланса пользователя в localStorage
+  const updateUserBalanceInLocalStorage = (telegramId: number, newPoints: number) => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userIndex = users.findIndex((user: { telegramId: number }) => user.telegramId === telegramId);
+    if (userIndex !== -1) {
+      users[userIndex].points = newPoints;
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+  };
+
   if (!isAuthenticated) {
     return <div>Loading...</div>; // Или другая заглушка на время проверки авторизации
   }
@@ -168,8 +200,8 @@ const Home = () => {
 
         <div className="flex-grow flex items-center justify-center clicker-button relative">
 
-          <button className="flex flex-col items-center gap-1 buttonvivod-button" onClick={() => handleButtonClick('/withdraw')}>
-          вывести
+          <button className="flex flex-col items-center gap-1 buttonvivod-button" onClick={handleWithdrawBalance}>
+            Вывести
           </button>
 
           <div className="relative mt-4 notc-block" onPointerDown={handlePointerDown}>
@@ -211,6 +243,7 @@ const Home = () => {
                 <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
                   <img src={rocket} width={24} height={24} alt="Boosts" />
                 </button>
+
               </div>
             </div>
           </div>

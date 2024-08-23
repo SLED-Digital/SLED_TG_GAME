@@ -87,8 +87,8 @@ img {
 .buttonvivod-button {
   background: #EDC448;
   border: 10px solid #EDC448;
-  width: 200px;
-  height: 50px;
+  width: 250px;
+  height: 80px;
   position: absolute;
   bottom: -40px;
   left: 50%;
@@ -141,7 +141,7 @@ img {
 @media (max-width: 640px) {
   .buttonvivod-button {
     width: 150px;
-    height: 40px;
+    height: 30px;
     font-size: 1.5rem;
   }
 
@@ -152,8 +152,8 @@ img {
 
 @media (max-width: 480px) {
   .buttonvivod-button {
-    width: 120px;
-    height: 35px;
+    width: 180px;
+    height: 55px;
     font-size: 1.2rem;
   }
 
@@ -186,7 +186,7 @@ img {
 }
 
 .margintext-top {
-  bottom: 10%;
+  bottom: 15%;
   position: absolute;
 }
 
