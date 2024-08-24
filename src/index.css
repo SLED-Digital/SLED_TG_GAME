@@ -69,12 +69,12 @@ img {
 }
 
 .background-kashtan {
-  height: 65%;
+  height: 35%;
   width: 100%;
-  top: 15%;
+  top: 35%;
   z-index: 1;
   background-color: #279E8B;
-  border-radius: 40px;
+  border-radius: 30px;
 }
 
 .block-energy {
@@ -90,7 +90,7 @@ img {
   width: 250px;
   height: 80px;
   position: absolute;
-  bottom: -40px;
+  bottom: -45px;
   /*left: 50%;*/
   /*transform: translateX(-50%);*/
   display: flex;
@@ -177,7 +177,8 @@ img {
 }
 
 .notc-width {
-  width: 70%;
+  margin-top: -35px;
+  width: 72%;
 }
 
 .textcolor-black {
@@ -206,8 +207,54 @@ img {
 .notc-block {
   display: flex;
   justify-content: center;
+  margin-top: -12px;
 }
 
 .clicker-button {
   flex-grow: 0.6;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  z-index: 1000; /* Высокое значение z-index */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999; /* Высокое значение z-index для оверлея */
+}
+
+/* Стили для всех уведомлений */
+.Toastify__toast {
+  background-color: #333; /* Цвет фона */
+  color: #fff; /* Цвет текста */
+  font-size: 16px; /* Размер шрифта */
+  border-radius: 8px; /* Закругление углов */
+}
+
+/* Стили для информационных уведомлений */
+.Toastify__toast--info {
+  background-color: #007bff; /* Цвет фона для информационных уведомлений */
+}
+
+.Toastify__toast--error {
+  background-color: #ff0044; /* Цвет фона для информационных уведомлений */
+}
+
+/* Стили для контейнера уведомлений */
+.Toastify__toast-container {
+  width: 320px; /* Ширина контейнера */
+  padding: 10px; /* Отступы внутри контейнера */
 }

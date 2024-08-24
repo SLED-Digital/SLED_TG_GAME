@@ -82,13 +82,13 @@ const Frens = () => {
       <div className="w-full z-10 min-h-screen flex flex-col items-center text-white">
         <div className="flex-grow flex items-center justify-center">
           <div className="flex flex-col items-center gap-4">
-            <input
-              type="text"
-              className="w-full p-2 rounded-lg bg-gray-800 text-white"
-              placeholder="Your invite link"
-              value={inviteLink}
-              readOnly
-            />
+            {/*<input*/}
+            {/*  type="text"*/}
+            {/*  className="w-full p-2 rounded-lg bg-gray-800 text-white"*/}
+            {/*  placeholder="Your invite link"*/}
+            {/*  value={inviteLink}*/}
+            {/*  readOnly*/}
+            {/*/>*/}
             <button
               className="w-full p-2 rounded-lg bg-blue-500 text-white"
               onClick={() => handleShareToMessenger('telegram')}

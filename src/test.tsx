@@ -4,6 +4,7 @@ import { bear, coin, highVoltage, notcoin, rocket } from './images';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 
 const Home = () => {
   const [points, setPoints] = useState(0);
@@ -12,6 +13,7 @@ const Home = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const pointsToAdd = 12;
   const energyToReduce = 12;
   const navigate = useNavigate();
@@ -81,6 +83,7 @@ const Home = () => {
         // Отображение модального окна с вводом инвайт-кода через 3 секунды
         setTimeout(() => {
           if (!localStorage.getItem('inviteCodeShown')) {
+            setIsModalOpen(true);
             localStorage.setItem('inviteCodeShown', 'true');
           }
         }, 3000);
@@ -194,7 +197,6 @@ const Home = () => {
 
   return (
     <div className="bg-gradient-main min-h-screen px-4 flex flex-col items-center text-white font-medium">
-      <ToastContainer />
       <div className="absolute inset-0 h-1/2 bg-gradient-overlay z-0"></div>
       <div className="absolute top background-kashtan flex flex-col items-center justify-center">
 
@@ -291,6 +293,20 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="Invite Code Modal"
+        className="modal"
+        overlayClassName="overlay"
+      >
+        <h2>Введите инвайт-код</h2>
+        <input type="text" placeholder="Инвайт-код" className="input" />
+        <button onClick={() => setIsModalOpen(false)} className="button">Отправить</button>
+      </Modal>
+
+      <ToastContainer />
     </div>
   );
 };

@@ -20,8 +20,15 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Хранение данных о пользователях
 let users = [];
 
-// Маршрут для обработки инвайт-ссылок
-app.post('/api/invite', (req, res) => {
+// Маршрут для проверки существования пользователя
+app.get('/api/users/:telegramId', (req, res) => {
+  const { telegramId } = req.params;
+  const user = users.find(user => user.telegramId === telegramId);
+  res.json(user || null);
+});
+
+// Маршрут для создания нового пользователя с проверкой инвайт-кода
+app.post('/api/users', (req, res) => {
   const { inviteCode, telegramId } = req.body;
 
   // Проверка, существует ли уже такой пользователь
@@ -41,7 +48,7 @@ app.post('/api/invite', (req, res) => {
   // Начисление награды пригласившему пользователю
   inviter.points += 1000; // Пример награды
 
-  res.json({ message: 'User joined via invite link. Inviter rewarded.' });
+  res.json({ message: 'User registered successfully. Inviter rewarded.' });
 });
 
 // Для всех запросов отправляем index.html
