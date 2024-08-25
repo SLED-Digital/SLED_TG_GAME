@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { coin, highVoltage, notcoin } from './images';
+import {bear, coin, highVoltage, notcoin, rocket} from './images';
 import axios from 'axios';
 import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -220,7 +220,7 @@ const Home = () => {
           <img
             src={notcoin}
             alt="notcoin"
-            className={`notc-width ${isClicked ? 'click-animation' : ''} center-image`}
+            className={`notc-width ${isClicked ? 'click-animation' : ''} `}
             onAnimationEnd={() => setIsClicked(false)}
           />
           {clicks.map((click) => (
@@ -239,21 +239,43 @@ const Home = () => {
           ))}
         </div>
 
-          <button
-            className={`buttonvivod-button ${isButtonPressed ? 'pressed' : ''}`}
-            onClick={handleWithdrawBalance}
-            // onMouseDown={() => setIsButtonPressed(true)}
-            // onMouseUp={() => setIsButtonPressed(false)}
-            // onMouseLeave={() => setIsButtonPressed(false)}
-          >
-            Вывести
-          </button>
+        <button
+          className={`buttonvivod-button ${isButtonPressed ? 'pressed' : ''}`}
+          onClick={handleWithdrawBalance}
+          // onMouseDown={() => setIsButtonPressed(true)}
+          // onMouseUp={() => setIsButtonPressed(false)}
+          // onMouseLeave={() => setIsButtonPressed(false)}
+        >
+          Вывести
+        </button>
 
-          <div className="mt-14 text-2xl font-bold flex items-center balance-block">
-            <img src={coin} width={39} height={44} />
-            <span className="ml-2 txt-size">{points.toLocaleString()}</span>
+        <div className="mt-14 text-2xl font-bold flex items-center balance-block">
+          <img src={coin} width={39} height={44} />
+          <span className="ml-2 txt-size">{points.toLocaleString()}</span>
+        </div>
+      </div>
+
+
+      <div className="absolute top bottom-block">
+        <div className="fixed bottom-0 left-0 w-full px-3 pb-3 z-22 navigatblock">
+          <div className="w-full flex justify-between gap-2 navigat">
+            <div className="flex-grow flex items-center max-w-80 text-sm">
+              <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
+                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/frens')}>
+                  <img src={bear} width={24} height={24} alt="Frens" />
+                </button>
+                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/')}>
+                  <img src={coin} width={24} height={24} alt="Home" />
+                </button>
+                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
+                  <img src={rocket} width={24} height={24} alt="Boosts" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+
+      </div>
 
 
 

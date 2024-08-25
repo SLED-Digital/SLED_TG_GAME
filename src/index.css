@@ -77,20 +77,20 @@
   }
 }
 
-/*@keyframes clickAnimation {*/
-/*  0% {*/
-/*    transform: scale(1);*/
-/*  }*/
-/*  50% {*/
-/*    transform: scale(1.2);*/
-/*  }*/
-/*  100% {*/
-/*    transform: scale(1);*/
-/*  }*/
-/*}*/
+@keyframes clickAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
 .click-animation {
-  animation: clickAnimation 0.8s ease-out;
+  animation: clickAnimation 0.2s ease-out;
 }
 
 /*!* Градиенты *!*/
@@ -151,14 +151,7 @@
 /*}*/
 
 /*!* Навигация *!*/
-/*.navigat {*/
-/*  background: #249D8C;*/
-/*  padding: 0.4rem;*/
-/*  border-radius: 1.5rem;*/
-/*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*}*/
+
 
 /*.navigat button {*/
 /*  display: flex;*/
@@ -243,7 +236,7 @@
   justify-content: center; /* Горизонтальное выравнивание по центру */
   align-items: flex-start; /* Вертикальное выравнивание по верхней границе */
   height: 100%; /* Убедитесь, что блок имеет высоту */
-  margin-top: -30%;
+  margin-top: -40%;
 }
 
 
@@ -251,20 +244,15 @@
 
 
 
-.center-image {
+.notc-width {
   height: 120%; /* Высота изображения равна высоте блока */
   width: auto; /* Ширина изображения автоматически подстраивается под высоту */
   position: absolute;
-  top: -10%; /* Закрепляем изображение к верхней границе */
-  left: 50%; /* Центрируем изображение по горизонтали */
-  transform: translateX(-50%); /* Сдвигаем изображение обратно на половину его ширины */
+  /*top: -10%; !* Закрепляем изображение к верхней границе *!*/
+  /*left: 50%; !* Центрируем изображение по горизонтали *!*/
+  /*transform: translateX(-50%); !* Сдвигаем изображение обратно на половину его ширины *!*/
 }
 
-
-
-/*.clicker-button {*/
-/*  flex-grow: 0.6;*/
-/*}*/
 
 
 
@@ -282,3 +270,19 @@
 /*  width: 320px; !* Ширина контейнера *!*/
 /*  padding: 10px; !* Отступы внутри контейнера *!*/
 /*}*/
+
+.bottom-block {
+  width: 100%;
+  bottom: 0;
+  height: 15%;
+}
+
+.navigat {
+  background: #249D8C;
+  margin-bottom: 3%;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+}
