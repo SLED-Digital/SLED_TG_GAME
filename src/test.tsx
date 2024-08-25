@@ -198,7 +198,7 @@ const Home = () => {
   return (
     <div className="bg-gradient-main min-h-screen px-4 flex flex-col items-center text-white font-medium">
       <div className="absolute inset-0 h-1/2 bg-gradient-overlay z-0"></div>
-      <div className="absolute top background-kashtan flex flex-col items-center justify-center">
+      <div className="absolute top midle-block flex flex-col items-center justify-center">
 
         <div className="mt-12 text-5xl font-bold flex items-center margintext-top">
           <img src={coin} width={39} height={44} />

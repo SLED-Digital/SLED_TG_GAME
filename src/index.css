@@ -2,24 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Основные настройки */
-html, body {
-  height: 100%;
-  overflow: hidden;
-  background-color: #279E8B; /* Основной фон */
-  font-family: sans-serif;
-  user-select: none;
+
+/*Настройки экрана*/
+.home-container {
+  min-height: 100vh; /* Полный видовой экран */
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+  width: 100%;
 }
 
-img {
-  user-select: none;
-  pointer-events: none;
-  -webkit-user-drag: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
+
+.top-block {
+  width: 100%;
+  top: 0;
+  height: 15%;
 }
 
-/* Анимации */
+.block-energy {
+  margin-top: 2%;
+  margin-left: 2%;
+  border: 10px solid #FCAC17;
+  background-color: #FCAC17;
+  border-radius: 18px;
+  width: 4rem;
+  /*margin-top: -35px;*/
+}
+.border-energy {
+  margin-top: -55px;
+  margin-left: 4.8rem;
+  /*margin-right: 3rem;*/
+  width: 70%;
+}
+
+.farmer-number {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  top: 2.0rem;
+  left: 4.3rem;
+}
+
+.energe-text {
+  color: black;
+}
+
+
+/*html, body {*/
+/*  height: 100%;*/
+/*  overflow: hidden;*/
+/*  background-color: #ffffff; !* Основной фон *!*/
+/*  font-family: sans-serif;*/
+/*  user-select: none;*/
+/*}*/
+
+/*img {*/
+/*  user-select: none;*/
+/*  pointer-events: none;*/
+/*  -webkit-user-drag: none;*/
+/*  -ms-user-select: none;*/
+/*  -moz-user-select: none;*/
+/*}*/
+
+/*!* Анимации *!*/
 @keyframes float {
   0% {
     opacity: 1;
@@ -31,71 +77,68 @@ img {
   }
 }
 
-@keyframes clickAnimation {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+/*@keyframes clickAnimation {*/
+/*  0% {*/
+/*    transform: scale(1);*/
+/*  }*/
+/*  50% {*/
+/*    transform: scale(1.2);*/
+/*  }*/
+/*  100% {*/
+/*    transform: scale(1);*/
+/*  }*/
+/*}*/
 
 .click-animation {
-  animation: clickAnimation 0.3s ease-out;
+  animation: clickAnimation 0.8s ease-out;
 }
 
-/* Градиенты */
-.bg-gradient-overlay {
-  background: linear-gradient(to bottom, rgb(255, 255, 255), #ffffff);
-}
+/*!* Градиенты *!*/
+/*.bg-gradient-overlay {*/
+/*  background: linear-gradient(to bottom, rgb(255, 255, 255), #ffffff);*/
+/*}*/
 
-.radial-gradient-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(36, 157, 140, 1) 0%, rgba(250, 214, 92, 0) 60%);
-}
+/*.radial-gradient-overlay {*/
+/*  position: absolute;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  background: radial-gradient(circle, rgba(36, 157, 140, 1) 0%, rgba(250, 214, 92, 0) 60%);*/
+/*}*/
 
-/* Блоки */
-.background-purple {
-  height: 33%;
-  width: 100%;
-  top: 67%;
-  z-index: 0;
-  background: #ffffff;
-}
+/*!* Блоки *!*/
+/*.background-purple {*/
+/*  height: 33%;*/
+/*  width: 100%;*/
+/*  top: 67%;*/
+/*  z-index: 0;*/
+/*  background: #ffffff;*/
+/*}*/
 
-.background-kashtan {
+.midle-block {
   height: 35%;
   width: 100%;
   top: 35%;
-  z-index: 1;
   background-color: #279E8B;
   border-radius: 30px;
 }
 
-.block-energy {
-  border: 10px solid #FCAC17;
-  background-color: #FCAC17;
-  border-radius: 18px;
-  margin-top: -35px;
-}
-
 .buttonvivod-button {
+
   background: #EDC448;
-  border: 10px solid #EDC448;
-  width: 250px;
-  height: 80px;
+  /*border: 10px solid #EDC448;*/
+  width: 180px;
+  height: 60px;
   position: absolute;
-  bottom: -45px;
+  bottom: 0; /* Закрепляем изображение к верхней границе */
+  left: 50%; /* Центрируем изображение по горизонтали */
+  transform: translateX(-50%); /* Сдвигаем изображение обратно на половину его ширины */
+
+  margin-bottom: -30px;
   /*left: 50%;*/
   /*transform: translateX(-50%);*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   font-weight: bold;
@@ -103,158 +146,139 @@ img {
   transition: transform 0.1s ease-in-out;
 }
 
-.buttonvivod-button.pressed {
-  transform: scale(0.95);
-}
+/*.buttonvivod-button.pressed {*/
+/*  transform: scale(0.95);*/
+/*}*/
 
-/* Навигация */
-.navigat {
-  background: #249D8C;
-  padding: 0.4rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-}
+/*!* Навигация *!*/
+/*.navigat {*/
+/*  background: #249D8C;*/
+/*  padding: 0.4rem;*/
+/*  border-radius: 1.5rem;*/
+/*  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*}*/
 
-.navigat button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  transition: transform 0.2s ease-in-out;
-}
+/*.navigat button {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  gap: 0.5rem;*/
+/*  transition: transform 0.2s ease-in-out;*/
+/*}*/
 
-.navigat button:hover {
-  transform: scale(1.6);
-}
+/*.navigat button:hover {*/
+/*  transform: scale(1.6);*/
+/*}*/
 
-.navigat img {
-  width: 32px;
-  height: 32px;
-  border-radius: 30%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
+/*.navigat img {*/
+/*  width: 32px;*/
+/*  height: 32px;*/
+/*  border-radius: 30%;*/
+/*  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/
+/*}*/
 
-.navigat span {
-  color: white;
-  font-weight: 300;
-  font-size: 0.6rem;
-}
+/*.navigat span {*/
+/*  color: white;*/
+/*  font-weight: 300;*/
+/*  font-size: 0.6rem;*/
+/*}*/
 
-/* Адаптивные стили */
-@media (max-width: 640px) {
-  .buttonvivod-button {
-    width: 150px;
-    height: 30px;
-    font-size: 1.5rem;
-  }
+/*!* Адаптивные стили *!*/
+/*@media (max-width: 640px) {*/
+/*  .buttonvivod-button {*/
+/*    width: 150px;*/
+/*    height: 30px;*/
+/*    font-size: 1.5rem;*/
+/*  }*/
 
-  .navigat button {
-    font-size: 0.6rem;
-  }
-}
+/*  .navigat button {*/
+/*    font-size: 0.6rem;*/
+/*  }*/
+/*}*/
 
-@media (max-width: 480px) {
-  .buttonvivod-button {
-    width: 180px;
-    height: 55px;
-    font-size: 1.2rem;
-  }
+/*@media (max-width: 480px) {*/
+/*  .buttonvivod-button {*/
+/*    width: 180px;*/
+/*    height: 55px;*/
+/*    font-size: 1.2rem;*/
+/*  }*/
 
-  .navigat button {
-    font-size: 0.5rem;
-  }
-}
+/*  .navigat button {*/
+/*    font-size: 0.5rem;*/
+/*  }*/
+/*}*/
 
-/* Дополнительные стили */
-.toolbar {
-  margin-top: 1rem;
-}
+/*!* Дополнительные стили *!*/
+/*.toolbar {*/
+/*  margin-top: 1rem;*/
+/*}*/
 
-.border-energy {
-  margin-top: -60px;
-}
+/*.border-energy {*/
+/*  margin-top: -60px;*/
+/*}*/
 
-.notc-width {
-  margin-top: -35px;
-  width: 72%;
-}
 
-.textcolor-black {
-  color: #000000;
-  font-size: 20px;
-  margin-top: -12px;
-}
+/*.textcolor-black {*/
+/*  color: #000000;*/
+/*  font-size: 20px;*/
+/*  margin-top: -12px;*/
+/*}*/
 
-.txt-size {
-  font-size: 3rem;
-}
+/*.txt-size {*/
+/*  font-size: 3rem;*/
+/*}*/
 
-.margintext-top {
-  bottom: 15%;
+.balance-block {
+  bottom: 52px;
   position: absolute;
-}
-
-.farmer-number {
-  display: inline-flex;
-  align-items: center;
-  position: absolute;
-  top: 3.3rem;
-  left: 4.9rem;
+  left: 50%; /* Центрируем изображение по горизонтали */
+  transform: translateX(-50%); /* Сдвигаем изображение обратно на половину его ширины */
 }
 
 .notc-block {
+  position: relative;
   display: flex;
-  justify-content: center;
-  margin-top: -12px;
+  justify-content: center; /* Горизонтальное выравнивание по центру */
+  align-items: flex-start; /* Вертикальное выравнивание по верхней границе */
+  height: 100%; /* Убедитесь, что блок имеет высоту */
+  margin-top: -30%;
 }
 
-.clicker-button {
-  flex-grow: 0.6;
+
+
+
+
+
+.center-image {
+  height: 120%; /* Высота изображения равна высоте блока */
+  width: auto; /* Ширина изображения автоматически подстраивается под высоту */
+  position: absolute;
+  top: -10%; /* Закрепляем изображение к верхней границе */
+  left: 50%; /* Центрируем изображение по горизонтали */
+  transform: translateX(-50%); /* Сдвигаем изображение обратно на половину его ширины */
 }
 
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  z-index: 1000; /* Высокое значение z-index */
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999; /* Высокое значение z-index для оверлея */
-}
 
-/* Стили для всех уведомлений */
-.Toastify__toast {
-  background-color: #333; /* Цвет фона */
-  color: #fff; /* Цвет текста */
-  font-size: 16px; /* Размер шрифта */
-  border-radius: 8px; /* Закругление углов */
-}
+/*.clicker-button {*/
+/*  flex-grow: 0.6;*/
+/*}*/
 
-/* Стили для информационных уведомлений */
-.Toastify__toast--info {
-  background-color: #007bff; /* Цвет фона для информационных уведомлений */
-}
 
-.Toastify__toast--error {
-  background-color: #ff0044; /* Цвет фона для информационных уведомлений */
-}
 
-/* Стили для контейнера уведомлений */
-.Toastify__toast-container {
-  width: 320px; /* Ширина контейнера */
-  padding: 10px; /* Отступы внутри контейнера */
-}
+/*!* Стили для информационных уведомлений *!*/
+/*.Toastify__toast--info {*/
+/*  background-color: #007bff; !* Цвет фона для информационных уведомлений *!*/
+/*}*/
+
+/*.Toastify__toast--error {*/
+/*  background-color: #ff0044; !* Цвет фона для информационных уведомлений *!*/
+/*}*/
+
+/*!* Стили для контейнера уведомлений *!*/
+/*.Toastify__toast-container {*/
+/*  width: 320px; !* Ширина контейнера *!*/
+/*  padding: 10px; !* Отступы внутри контейнера *!*/
+/*}*/
