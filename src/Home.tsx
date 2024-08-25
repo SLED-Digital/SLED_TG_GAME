@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { bear, coin, highVoltage, notcoin, rocket } from './images';
+import { coin, highVoltage, notcoin } from './images';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
@@ -120,10 +120,10 @@ const Home = () => {
   };
 
   // Обработчик нажатия на кнопки навигации
-  const handleButtonClick = (path: string) => {
-    const telegramId = localStorage.getItem('telegramId');
-    navigate(`${path}?telegramId=${telegramId}`);
-  };
+  // const handleButtonClick = (path: string) => {
+  //   const telegramId = localStorage.getItem('telegramId');
+  //   navigate(`${path}?telegramId=${telegramId}`);
+  // };
 
   // Определение цвета энергии
   const getEnergyColor = () => {
