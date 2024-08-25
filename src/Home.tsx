@@ -120,10 +120,10 @@ const Home = () => {
   };
 
   // Обработчик нажатия на кнопки навигации
-  // const handleButtonClick = (path: string) => {
-  //   const telegramId = localStorage.getItem('telegramId');
-  //   navigate(`${path}?telegramId=${telegramId}`);
-  // };
+  const handleButtonClick = (path: string) => {
+    const telegramId = localStorage.getItem('telegramId');
+    navigate(`${path}?telegramId=${telegramId}`);
+  };
 
   // Определение цвета энергии
   const getEnergyColor = () => {
