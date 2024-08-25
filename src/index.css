@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background-color: #ffffff; /* Основной фон */
+  font-family: sans-serif;
+  user-select: none;
+}
 
 /*Настройки экрана*/
 .home-container {
@@ -12,6 +19,7 @@
   /*justify-content: center;*/
   width: 100%;
 }
+
 
 
 .top-block {
@@ -49,13 +57,7 @@
 }
 
 
-/*html, body {*/
-/*  height: 100%;*/
-/*  overflow: hidden;*/
-/*  background-color: #ffffff; !* Основной фон *!*/
-/*  font-family: sans-serif;*/
-/*  user-select: none;*/
-/*}*/
+
 
 /*img {*/
 /*  user-select: none;*/
@@ -285,4 +287,51 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.frens-container {
+  min-height: 100vh; /* Полный видовой экран */
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+  width: 100%;
+}
+
+.frens-top {
+  top: 0;
+  height: 20%;
+  width: 100%;
 }

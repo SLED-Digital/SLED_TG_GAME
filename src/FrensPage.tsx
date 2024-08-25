@@ -65,58 +65,63 @@ const Frens = () => {
   };
 
   return (
-    <div className="bg-gradient-main min-h-screen px-4 flex flex-col items-center text-white font-medium">
-      <div className="absolute inset-0 h-1/2 bg-gradient-overlay z-0"></div>
-      <div className="absolute top midle-block flex flex-col items-center justify-center">
-        <div className="mt-12 text-5xl font-bold flex items-center margintext-top">
-          <img src={bear} width={39} height={44} />
-          <span className="ml-2 txt-size">Frens</span>
-        </div>
-      </div>
-      <div className="absolute top background-purple"></div>
-
-      <div className="absolute inset-0 flex items-center justify-center z-0">
-        <div className="radial-gradient-overlay"></div>
+      <div className="frens-container">
+        <div className="absolute top frens-top">привет</div>
+        привет
       </div>
 
-      <div className="w-full z-10 min-h-screen flex flex-col items-center text-white">
-        <div className="flex-grow flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-            {/*<input*/}
-            {/*  type="text"*/}
-            {/*  className="w-full p-2 rounded-lg bg-gray-800 text-white"*/}
-            {/*  placeholder="Your invite link"*/}
-            {/*  value={inviteLink}*/}
-            {/*  readOnly*/}
-            {/*/>*/}
-            <button
-              className="w-full p-2 rounded-lg bg-blue-500 text-white"
-              onClick={() => handleShareToMessenger('telegram')}
-            >
-              Share to Telegram
-            </button>
-          </div>
-        </div>
-
-        <div className="fixed bottom-0 left-0 w-full px-3 pb-3 z-22 navigatblock">
-          <div className="w-full flex justify-between gap-2 navigat">
-            <div className="flex-grow flex items-center max-w-80 text-sm">
-              <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
-                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/earn')}>
-                  <img src={coin} width={24} height={24} alt="Earn" />
-                </button>
-                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/frens')}>
-                  <img src={bear} width={24} height={24} alt="Frens" />
-                </button>
-                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
-                  <img src={rocket} width={24} height={24} alt="Boosts" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    // <div className="bg-gradient-main min-h-screen px-4 flex flex-col items-center text-white font-medium">
+    //   <div className="absolute inset-0 h-1/2 bg-gradient-overlay z-0"></div>
+    //   <div className="absolute top midle-block flex flex-col items-center justify-center">
+    //     <div className="mt-12 text-5xl font-bold flex items-center margintext-top">
+    //       <img src={bear} width={39} height={44} />
+    //       <span className="ml-2 txt-size">Frens</span>
+    //     </div>
+    //   </div>
+    //   <div className="absolute top background-purple"></div>
+    //
+    //   <div className="absolute inset-0 flex items-center justify-center z-0">
+    //     <div className="radial-gradient-overlay"></div>
+    //   </div>
+    //
+    //   <div className="w-full z-10 min-h-screen flex flex-col items-center text-white">
+    //     <div className="flex-grow flex items-center justify-center">
+    //       <div className="flex flex-col items-center gap-4">
+    //         {/*<input*/}
+    //         {/*  type="text"*/}
+    //         {/*  className="w-full p-2 rounded-lg bg-gray-800 text-white"*/}
+    //         {/*  placeholder="Your invite link"*/}
+    //         {/*  value={inviteLink}*/}
+    //         {/*  readOnly*/}
+    //         {/*/>*/}
+    //         <button
+    //           className="w-full p-2 rounded-lg bg-blue-500 text-white"
+    //           onClick={() => handleShareToMessenger('telegram')}
+    //         >
+    //           Share to Telegram
+    //         </button>
+    //       </div>
+    //     </div>
+    //
+    //     <div className="fixed bottom-0 left-0 w-full px-3 pb-3 z-22 navigatblock">
+    //       <div className="w-full flex justify-between gap-2 navigat">
+    //         <div className="flex-grow flex items-center max-w-80 text-sm">
+    //           <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
+    //             <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/earn')}>
+    //               <img src={coin} width={24} height={24} alt="Earn" />
+    //             </button>
+    //             <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/frens')}>
+    //               <img src={bear} width={24} height={24} alt="Frens" />
+    //             </button>
+    //             <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
+    //               <img src={rocket} width={24} height={24} alt="Boosts" />
+    //             </button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 
