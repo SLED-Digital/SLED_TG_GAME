@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { bear, coin, rocket } from './images';
 import { toast } from 'react-toastify';
@@ -64,11 +64,40 @@ const Frens = () => {
     navigate(`${path}?telegramId=${telegramId}`);
   };
 
-  return (
-      <div className="frens-container">
-        <div className="absolute top frens-top">привет</div>
-        привет
+return (
+  <div className="frens-container">
+    <div className="absolute top-0 w-full h-5% flex items-center justify-center frens-top">
+      <p>Текст в центре</p>
+    </div>
+    <div className="absolute top-1/4 w-full h-1/2 frens-midle flex flex-col items-center justify-center">
+      <button className="mb-2">Кнопка 1</button>
+      <p className="mb-2">Текст 1</p>
+      <button>Кнопка 2</button>
+      <p>Текст 2</p>
+    </div>
+
+    <div className="absolute top-3/4 w-full h-1/4 bottom-block">
+      <div className="fixed bottom-0 left-0 w-full px-3 pb-3 z-22 navigatblock">
+        <div className="w-full flex justify-between gap-2 navigat">
+          <div className="flex-grow flex items-center max-w-80 text-sm">
+            <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
+              <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/frens')}>
+                <img src={bear} width={24} height={24} alt="Frens" />
+              </button>
+              <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/')}>
+                <img src={coin} width={24} height={24} alt="Home" />
+              </button>
+              <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
+                <img src={rocket} width={24} height={24} alt="Boosts" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+
+
 
     // <div className="bg-gradient-main min-h-screen px-4 flex flex-col items-center text-white font-medium">
     //   <div className="absolute inset-0 h-1/2 bg-gradient-overlay z-0"></div>
