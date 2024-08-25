@@ -67,13 +67,22 @@ const Frens = () => {
 return (
   <div className="frens-container">
     <div className="absolute top-0 w-full h-5% flex items-center justify-center frens-top">
-      <p>Текст в центре</p>
+      <p>Пригласи друзей</p>
     </div>
     <div className="absolute top-1/4 w-full h-1/2 frens-midle flex flex-col items-center justify-center">
-      <button className="mb-2">Кнопка 1</button>
-      <p className="mb-2">Текст 1</p>
-      <button>Кнопка 2</button>
-      <p>Текст 2</p>
+
+      <button className="mb-2">Кнопка 1
+        <img src={coin} width={24} height={24} alt="Home" />
+      </button>
+
+      <p className="mb-2">+50 следов для друга</p>
+
+
+      <button>Кнопка 2
+      <img src={coin} width={24} height={24} alt="Home" />
+      </button>
+
+      <p>+50 следов для друга</p>
     </div>
 
     <div className="absolute top-3/4 w-full h-1/4 bottom-block">
