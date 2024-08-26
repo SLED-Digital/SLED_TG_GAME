@@ -96,14 +96,17 @@ const Frens = () => {
 
   return (
     <div className="frens-container">
-      <div className="absolute top-0 w-full h-20 flex items-center justify-center frens-top bg-yellow-500">
-        <p className="text-2xl font-bold">Пригласи друзей</p>
+      <div className="absolute top-0  flex items-center justify-center frens-top">
+        <p className="text-4xl font-bold text-center">Пригласи <br /> друзей</p>
       </div>
 
-      <div className="absolute top-1/4 w-full h-1/2 frens-middle flex flex-col items-center justify-center bg-green-500 rounded-3xl p-4">
-        <p className="text-lg font-semibold mb-4">
-          Используй инвайт-код ниже:
-        </p>
+      <div className="absolute w-full  frens-middle flex flex-col items-center justify-center bg-[#279E8B] rounded-3xl p-4">
+        <div className="flex items-center">
+          <img src={coin} width={50} height={50} className="mr-5 mb-3" />
+          <p className="text-lg font-semibold mb-4 font-montserrat">
+            Ты и твой друг <br /> получат СЛЕДики
+          </p>
+        </div>
         <div className="bg-white text-black px-4 py-2 rounded-lg mb-4">
           {telegramId}
         </div>
