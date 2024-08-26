@@ -292,6 +292,11 @@ html, body {
   justify-content: center;
 }
 
+button img {
+  width: 45px;  /* Обновленный размер ширины */
+  height: 45px; /* Обновленный размер высоты */
+}
+
 
 
 
