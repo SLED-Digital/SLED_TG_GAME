@@ -107,29 +107,35 @@ const Frens = () => {
             Ты и твой друг <br /> получат СЛЕДики
           </p>
         </div>
-        <div className="bg-white text-black px-4 py-2 rounded-lg mb-4">
-          {telegramId}
-        </div>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg mb-2 flex items-center justify-center"
+          className="mt-6 mb-2` bg-white text-black font-bold px-10 py-4 rounded-3xl flex items-center justify-center text-lg font-montserrat"
           onClick={handleShareToTelegram}
         >
-          Поделиться в Telegram
+          <img src={coin} width={20} height={20} className="mr-2" />
+          Пригласить друга
         </button>
+
+        <p className="text-lg mb-1 font-montserrat text-black">
+            +50   следов за друга
+        </p>
+
+        {/*<div className="bg-white text-black px-4 py-2 rounded-lg mb-4">*/}
+        {/*  {telegramId}*/}
+        {/*</div>*/}
         {!isUserCodeActivated && (
           <div className="flex flex-col items-center mt-4">
             <input
               type="text"
               value={inputInviteCode}
               onChange={(e) => setInputInviteCode(e.target.value)}
-              placeholder="Введите инвайт-код"
+              placeholder="Введите код приглошения"
               className="w-full px-4 py-2 mb-2 border rounded-lg text-black"
             />
             <button
               className="bg-red-500 text-white px-4 py-2 rounded-lg"
               onClick={handleActivateInviteCode}
             >
-              Активировать инвайт-код
+              Активировать
             </button>
           </div>
         )}
