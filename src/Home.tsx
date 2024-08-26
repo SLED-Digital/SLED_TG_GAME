@@ -209,7 +209,7 @@ const Home = () => {
         </div>
         <div className="ml-2 text-left farmer-number">
           <span className="energe-text text-2xl font-bold block textcolor-black">{energy}</span>
-          <span className="energe-text text-large opacity-65 textcolor-black">/ 500</span>
+          <span className="energe-text text-large opacity-65 textcolor-black">/  500</span>
         </div>
       </div>
 
@@ -234,7 +234,7 @@ const Home = () => {
               }}
               onAnimationEnd={() => handleAnimationEnd(click.id)}
             >
-              <img src={notcoin} width={56*0.8} height={56*0.8} alt="Coin" style={{ filter: 'invert(1)' }} />
+              <img src={notcoin} width={56*0.8} height={56*0.8} alt="Coin" style={{ filter: 'invert(1) sepia(1) saturate(10000%) hue-rotate(330deg)' }} />
             </div>
           ))}
         </div>
