@@ -2,8 +2,10 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import fs from 'fs/promises'; // Для работы с файловой системой
 
-// Получение __dirname в ES-модулях
+// Получение __filename и __dirname в ES-модулях
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -11,51 +13,157 @@ const app = express();
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 8080;
 
-// Использование bodyParser для парсинга JSON-запросов
 app.use(bodyParser.json());
+app.use(cors());
 
-// Обслуживание статических файлов из папки dist
-app.use(express.static(path.join(__dirname, 'dist')));
+const USERS_FILE = path.join(__dirname, 'users.json');
 
-// Хранение данных о пользователях
-let users = [];
+// Загрузка пользователей из JSON
+const loadUsers = async () => {
+  try {
+    const data = await fs.readFile(USERS_FILE, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error loading users:', error);
+    if (error.code === 'ENOENT') {
+      // Если файл не существует, создаем его с пустым массивом пользователей
+      await saveUsers([]);
+      return [];
+    } else {
+      throw new Error('Failed to load users');
+    }
+  }
+};
 
-// Маршрут для проверки существования пользователя
-app.get('/api/users/:telegramId', (req, res) => {
-  const { telegramId } = req.params;
-  const user = users.find(user => user.telegramId === telegramId);
-  res.json(user || null);
-});
+// Сохранение пользователей в JSON
+const saveUsers = async (users) => {
+  try {
+    await fs.writeFile(USERS_FILE, JSON.stringify(users, null, 2));
+  } catch (error) {
+    console.error('Error saving users:', error);
+    throw new Error('Failed to save users');
+  }
+};
 
-// Маршрут для создания нового пользователя с проверкой инвайт-кода
-app.post('/api/users', (req, res) => {
+// Добавление нового пользователя
+const addUser = async (telegramId) => {
+  const users = await loadUsers();
+  const user = {
+    telegramId,
+    points: 0,
+    energy: 500,
+    inviteCode: telegramId,
+    activatedInviteCodes: []
+  };
+  users.push(user);
+  await saveUsers(users);
+  return user;
+};
+
+// Проверка наличия пользователя
+const getUser = async (telegramId) => {
+  const users = await loadUsers();
+  return users.find((user) => user.telegramId === telegramId);
+};
+
+// Начисление бонусов за активацию инвайт-кода
+const activateInviteCode = async (inviteCode, telegramId) => {
+  const users = await loadUsers();
+  const user = users.find((u) => u.telegramId === telegramId);
+  const inviter = users.find((u) => u.inviteCode === inviteCode);
+
+  if (!user || !inviter || user.activatedInviteCodes.includes(inviteCode)) {
+    throw new Error('Invalid invite code or user or code already activated');
+  }
+
+  // Начисление бонусов
+  const bonusPoints = 100; // бонусные баллы за активацию инвайт-кода
+  inviter.points += bonusPoints;
+  user.points += bonusPoints;
+
+  // Добавление кода в список активированных
+  user.activatedInviteCodes.push(inviteCode);
+
+  await saveUsers(users);
+};
+
+// Endpoint для активации инвайт-кода
+app.post('/api/activate-invite', async (req, res) => {
   const { inviteCode, telegramId } = req.body;
 
-  // Проверка, существует ли уже такой пользователь
-  if (users.some(user => user.telegramId === telegramId)) {
-    return res.status(400).json({ message: 'User already exists.' });
+  if (!inviteCode || !telegramId) {
+    return res.status(400).json({ error: 'Invite code and telegram ID are required' });
   }
 
-  // Проверка, существует ли инвайт-код
-  const inviter = users.find(user => user.telegramId === inviteCode);
-  if (!inviter) {
-    return res.status(400).json({ message: 'Invalid invite code.' });
+  try {
+    await activateInviteCode(inviteCode, telegramId);
+    res.status(200).json({ message: 'Invite code activated successfully' });
+  } catch (error) {
+    console.error('Error activating invite code:', error);
+    res.status(500).json({ error: error.message });
   }
-
-  // Добавление нового пользователя
-  users.push({ telegramId, points: 0, energy: 2532, minedCurrency: 0, miners: 0 });
-
-  // Начисление награды пригласившему пользователю
-  inviter.points += 1000; // Пример награды
-
-  res.json({ message: 'User registered successfully. Inviter rewarded.' });
 });
 
-// Для всех запросов отправляем index.html
+// Endpoint для коррекции баланса пользователя
+app.put('/api/records/chat/:telegramId/balance/adjust', async (req, res) => {
+  const { telegramId } = req.params;
+  const { amount } = req.body;
+
+  if (!telegramId || !amount) {
+    return res.status(400).json({ error: 'Telegram ID and amount are required' });
+  }
+
+  try {
+    // Загрузка пользователей из JSON
+    const users = await loadUsers();
+    const user = users.find((u) => u.telegramId === telegramId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Коррекция баланса
+    user.points = Math.max(0, user.points + amount);
+
+    // Сохранение изменений
+    await saveUsers(users);
+
+    res.status(200).json({ message: 'Balance adjusted successfully' });
+  } catch (error) {
+    console.error('Error adjusting user balance:', error);
+    res.status(500).json({ error: 'Error adjusting user balance' });
+  }
+});
+
+// Endpoint для проверки и добавления пользователя при первом входе
+app.post('/api/user/check', async (req, res) => {
+  const { telegramId } = req.body;
+
+  if (!telegramId) {
+    return res.status(400).json({ error: 'Telegram ID is required' });
+  }
+
+  try {
+    let user = await getUser(telegramId);
+    if (!user) {
+      user = await addUser(telegramId);
+    }
+
+    res.status(200).json({ message: 'User checked successfully', user });
+  } catch (error) {
+    console.error('Error checking user:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Обслуживание статических файлов (React приложения)
+app.use(express.static(path.join(__dirname, 'dist')));
+
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
+// Запуск сервера
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
