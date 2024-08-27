@@ -103,42 +103,47 @@ const Frens = () => {
       <div className="absolute w-full  frens-middle flex flex-col items-center justify-center bg-[#279E8B] rounded-3xl p-4">
         <div className="flex items-center">
           <img src={coin} width={50} height={50} className="mr-5 mb-3" />
-          <p className="text-lg font-semibold mb-4 font-montserrat">
+          <p className="text-2xl font-semibold mb-4 font-montserrat">
             Ты и твой друг <br /> получат СЛЕДики
           </p>
         </div>
         <button
-          className="mt-6 mb-2` bg-white text-black font-bold px-10 py-4 rounded-3xl flex items-center justify-center text-lg font-montserrat"
+          className="invite-text mt-6 mb-2` bg-white text-black font-bold rounded-3xl flex items-center justify-center text-lg font-montserrat"
           onClick={handleShareToTelegram}
         >
           <img src={coin} width={20} height={20} className="mr-2" />
           Пригласить друга
         </button>
 
-        <p className="text-lg mb-1 font-montserrat text-black">
+        <p className="text-lg mt-2 font-montserrat text-black">
             +50   следов за друга
         </p>
 
         {/*<div className="bg-white text-black px-4 py-2 rounded-lg mb-4">*/}
         {/*  {telegramId}*/}
         {/*</div>*/}
+
         {!isUserCodeActivated && (
-          <div className="flex flex-col items-center mt-4">
+          <div className="active-code-block flex  items-center mt-4">
             <input
               type="text"
               value={inputInviteCode}
               onChange={(e) => setInputInviteCode(e.target.value)}
-              placeholder="Введите код приглошения"
-              className="w-full px-4 py-2 mb-2 border rounded-lg text-black"
+              placeholder="код"
+              className="w-full px-10 py-4  border rounded-l-3xl text-black"
             />
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded-lg"
+              className="ml-2 bg-white text-black font-montserrat font-bold px-10 py-4 rounded-r-3xl "
               onClick={handleActivateInviteCode}
             >
               Активировать
             </button>
           </div>
         )}
+
+        <p className="text-lg mt-2 font-montserrat text-black">
+              напиши код и получи +50 следов
+        </p>
       </div>
 
       <div className="absolute bottom-0 w-full px-3 pb-3 z-22 navigatblock">

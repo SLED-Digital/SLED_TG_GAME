@@ -358,3 +358,13 @@ button img {
   border-radius: 30px;
 }
 
+.invite-text {
+  height: 60px;
+  width: 80%;
+}
+
+.active-code-block {
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
