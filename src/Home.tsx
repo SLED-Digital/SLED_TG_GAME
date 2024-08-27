@@ -234,7 +234,7 @@ const Home = () => {
               }}
               onAnimationEnd={() => handleAnimationEnd(click.id)}
             >
-              <img src={notcoin} width={56*0.8} height={56*0.8} alt="Coin" style={{ filter: 'invert(1) sepia(1) saturate(10000%) hue-rotate(330deg)' }} />
+              <img src={notcoin} width={56*0.8} height={56*0.8} alt="Coin" style={{ filter: 'invert(1)' }} />
             </div>
           ))}
         </div>
