@@ -141,7 +141,7 @@ const Home = () => {
   const handleWithdrawBalance = async () => {
     setIsButtonPressed(true); // Устанавливаем состояние нажатия
 
-    const token = 'kondrateVVV1987';
+    const token = '';
     const FLASK_API_URL = `https://sled-bd-sled.amvera.io/api/records`;
     const telegramId = Number(localStorage.getItem('telegramId'));
 
