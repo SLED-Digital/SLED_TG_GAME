@@ -97,10 +97,10 @@ const Frens = () => {
   return (
     <div className="frens-container">
       <div className="absolute top-0  flex items-center justify-center frens-top">
-        <p className="text-4xl font-bold text-center">Пригласи <br /> друзей</p>
+        <p className="text-5xl font-bold text-center">Пригласи <br /> друзей</p>
       </div>
 
-      <div className="absolute w-full  frens-middle flex flex-col items-center justify-center bg-[#279E8B] rounded-3xl p-4">
+      <div className="absolute w-full frens-middle flex flex-col items-center justify-center bg-[#279E8B] rounded-3xl p-4">
         <div className="flex items-center">
           <img src={coin} width={50} height={50} className="mr-5 mb-3" />
           <p className="text-2xl font-semibold mb-4 font-montserrat">
@@ -108,7 +108,7 @@ const Frens = () => {
           </p>
         </div>
         <button
-          className="invite-text mt-6 mb-2` bg-white text-black font-bold rounded-3xl flex items-center justify-center text-lg font-montserrat"
+          className="invite-text mt-6 mb-2 bg-white text-black font-bold rounded-3xl flex items-center justify-center text-lg font-montserrat"
           onClick={handleShareToTelegram}
         >
           <img src={coin} width={20} height={20} className="mr-2" />
@@ -116,24 +116,20 @@ const Frens = () => {
         </button>
 
         <p className="text-lg mt-2 font-montserrat text-black">
-            +50   следов за друга
+          +50 следов за друга
         </p>
 
-        {/*<div className="bg-white text-black px-4 py-2 rounded-lg mb-4">*/}
-        {/*  {telegramId}*/}
-        {/*</div>*/}
-
         {!isUserCodeActivated && (
-          <div className="active-code-block flex  items-center mt-4">
+          <div className="active-code-block flex items-center mt-4">
             <input
               type="text"
               value={inputInviteCode}
               onChange={(e) => setInputInviteCode(e.target.value)}
               placeholder="код"
-              className="w-full px-10 py-4  border rounded-l-3xl text-black"
+              className="w-full px-10 py-4 border rounded-l-3xl text-black h-12"
             />
             <button
-              className="ml-2 bg-white text-black font-montserrat font-bold px-10 py-4 rounded-r-3xl "
+              className="ml-2  flex items-center justify-center bg-white text-black text-lg font-montserrat font-bold px-8 py-4 rounded-r-3xl h-12"
               onClick={handleActivateInviteCode}
             >
               Активировать
@@ -142,7 +138,7 @@ const Frens = () => {
         )}
 
         <p className="text-lg mt-2 font-montserrat text-black">
-              напиши код и получи +50 следов
+          напиши код и получи +50 следов
         </p>
       </div>
 
