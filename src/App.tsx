@@ -5,7 +5,6 @@ import EarnPage from './EarnPage';
 import BoostsPage from './BoostsPage';
 import React from 'react';
 
-
 const App: React.FC = () => (
   <Router>
     <Routes>

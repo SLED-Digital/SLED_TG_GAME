@@ -1,3 +1,44 @@
-{
-
-}
+[
+  {
+    "telegramId": 214,
+    "points": 0,
+    "energy": 500,
+    "inviteCode": 214,
+    "activatedInviteCodes": []
+  },
+  {
+    "telegramId": 216,
+    "points": 0,
+    "energy": 500,
+    "inviteCode": 216,
+    "activatedInviteCodes": []
+  },
+  {
+    "telegramId": 215,
+    "points": 1490,
+    "energy": 500,
+    "inviteCode": 215,
+    "activatedInviteCodes": []
+  },
+  {
+    "telegramId": 42,
+    "points": 2172,
+    "energy": 500,
+    "inviteCode": 42,
+    "activatedInviteCodes": []
+  },
+  {
+    "telegramId": 43,
+    "points": 2544,
+    "energy": 500,
+    "inviteCode": 43,
+    "activatedInviteCodes": []
+  },
+  {
+    "telegramId": 44,
+    "points": 0,
+    "energy": 500,
+    "inviteCode": 44,
+    "activatedInviteCodes": []
+  }
+]

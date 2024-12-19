@@ -17,16 +17,20 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
+    "localforage": "^1.10.0",
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.1",
+    "react-scroll": "^1.9.0",
     "react-share": "^5.1.0",
     "react-toastify": "^10.0.5",
+    "sequelize": "^6.37.3",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "tailwindcss-filters": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

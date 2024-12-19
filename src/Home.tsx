@@ -1,23 +1,35 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {bear, coin, highVoltage, notcoin, rocket} from './images';
+import { coin, frens, frens_inv, highVoltage, home, home_inv, notcoin, task, task_inv } from './images';
 import axios from 'axios';
-import { toast} from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+interface Click {
+  id: number;
+  x: number;
+  y: number;
+}
 
 const Home = () => {
   const [points, setPoints] = useState(0);
-  const [energy, setEnergy] = useState(2532);
-  const [clicks, setClicks] = useState<{ id: number, x: number, y: number }[]>([]);
+  const [energy, setEnergy] = useState(500);
+  const [clicks, setClicks] = useState<Click[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
-  const pointsToAdd = 12;
-  const energyToReduce = 12;
+  const [telegramId, setTelegramId] = useState<number | null>(null);
+  const SECRET_TOKEN = "kondrateVVV1987";
+  const BD_URL = "https://sled-bd-sled.amvera.io";
+  // const BD_URL = "http://127.0.0.1:5000";
+  const pointsToAdd = 10;
+  const energyToReduce = 10;
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Обработчик нажатия на экран
+  const searchParams = new URLSearchParams(location.search);
+  const telegramIdFromUrl = searchParams.get('telegramId');
+
   const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if (energy - energyToReduce < 0) {
       return;
@@ -34,15 +46,17 @@ const Home = () => {
     updateUserInLocalStorage(newPoints, newEnergy);
 
     setClicks((prevClicks) => [...prevClicks, { id: Date.now(), x, y }]);
-    setIsClicked(true); // Устанавливаем состояние для анимации
+    setIsClicked(true);
+
+    if ('vibrate' in navigator) {
+      navigator.vibrate(100);
+    }
   }, [energy, points, energyToReduce, pointsToAdd]);
 
-  // Обработчик окончания анимации
   const handleAnimationEnd = useCallback((id: number) => {
     setClicks((prevClicks) => prevClicks.filter(click => click.id !== id));
   }, []);
 
-  // Эффект для восстановления энергии
   useEffect(() => {
     const interval = setInterval(() => {
       const newEnergy = Math.min(energy + 1, 500);
@@ -53,152 +67,159 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [energy, points]);
 
-  // Эффект для аутентификации пользователя
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const telegramId = Number(searchParams.get('telegramId'));
+    const user = Telegram.WebApp.initDataUnsafe.user;
+    const telegramIdFromTelegram = user ? user.id : null;
+    const telegramIdFromUrlNumber = telegramIdFromUrl ? Number(telegramIdFromUrl) : null;
 
+    const telegramId = telegramIdFromUrlNumber || telegramIdFromTelegram;
     if (telegramId) {
-      let user = checkUserExists(telegramId);
+      checkUser(telegramId);
+    } else {
+      navigate('/login');
+    }
+  }, [location, navigate, telegramIdFromUrl]);
 
-      if (!user) {
-        addUser(telegramId);
-        user = checkUserExists(telegramId);
+  useEffect(() => {
+    if (telegramId) {
+      const storedData = localStorage.getItem(`user_${telegramId}`);
+      if (storedData) {
+        const { points: storedPoints, energy: storedEnergy } = JSON.parse(storedData);
+        setPoints(storedPoints);
+        setEnergy(storedEnergy);
       }
+    }
+  }, [telegramId]);
 
+  const checkUser = async (telegramId: number) => {
+    try {
+      const response = await axios.get(`${BD_URL}/api/user/check/${telegramId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SECRET_TOKEN}`
+        }
+      });
+      const user = response.data.user;
       if (user) {
         setIsAuthenticated(true);
-        setPoints(user.points);
-        setEnergy(user.energy);
-        localStorage.setItem('telegramId', String(telegramId));
+        setTelegramId(telegramId);
 
-        // Показ приветственного уведомления при первой регистрации
         if (!localStorage.getItem('welcomeShown')) {
           toast.success('Добро пожаловать! Спасибо, что присоединились к нам.');
           localStorage.setItem('welcomeShown', 'true');
         }
 
-        // Отображение модального окна с вводом инвайт-кода через 3 секунды
         setTimeout(() => {
           if (!localStorage.getItem('inviteCodeShown')) {
             localStorage.setItem('inviteCodeShown', 'true');
           }
         }, 3000);
+
+        // Start sending data to server every minute
+        setInterval(sendDataToServer, 60000);
       } else {
-        console.error('Failed to authenticate user');
+        console.error('User not found');
+        navigate('/login');
       }
-    } else {
-      navigate('/login'); // Перенаправьте на страницу входа, если параметр не найден
+    } catch (error) {
+      console.error('Error checking user:', error);
+      toast.error('Ошибка при проверке пользователя.');
     }
-  }, [location, navigate]);
-
-  // Проверка наличия пользователя в localStorage
-  const checkUserExists = (telegramId: number) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    return users.find((user: { telegramId: number }) => user.telegramId === telegramId);
   };
 
-  // Добавление нового пользователя в localStorage
-  const addUser = (telegramId: number) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    users.push({ telegramId, points: 0, energy: 2532, minedCurrency: 0, miners: 0 });
-    localStorage.setItem('users', JSON.stringify(users));
-  };
-
-  // Обновление данных пользователя в localStorage
   const updateUserInLocalStorage = (newPoints: number, newEnergy: number) => {
-    const telegramId = Number(localStorage.getItem('telegramId'));
     if (telegramId) {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const userIndex = users.findIndex((user: { telegramId: number }) => user.telegramId === telegramId);
-      if (userIndex !== -1) {
-        users[userIndex].points = newPoints;
-        users[userIndex].energy = newEnergy;
-        localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem(`user_${telegramId}`, JSON.stringify({ points: newPoints, energy: newEnergy }));
+    }
+  };
+
+  const sendDataToServer = async () => {
+    if (telegramId) {
+      const userData = JSON.parse(localStorage.getItem(`user_${telegramId}`) || '{}');
+      if (userData.points !== undefined && userData.energy !== undefined) {
+        try {
+          await axios.put(`${BD_URL}/api/records/chat/${telegramId}/adjust`, {
+            amount: userData.points - points,
+            energy: userData.energy
+          }, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${SECRET_TOKEN}`
+            }
+          });
+          setPoints(userData.points);
+          setEnergy(userData.energy);
+        } catch (error) {
+          console.error('Error sending data to server:', error);
+          toast.error('Ошибка при синхронизации данных с сервером.');
+        }
       }
     }
   };
 
-  // Обработчик нажатия на кнопки навигации
   const handleButtonClick = (path: string) => {
-    const telegramId = localStorage.getItem('telegramId');
     navigate(`${path}?telegramId=${telegramId}`);
   };
 
-  // Определение цвета энергии
   const getEnergyColor = () => {
     const percentage = (energy / 500) * 100;
     if (percentage > 66) {
-      return '#fad258'; // Жёлтый (по умолчанию)
+      return '#fad258';
     } else if (percentage > 33) {
-      return '#f9a258'; // Оранжевый
+      return '#f9a258';
     } else {
-      return '#f95758'; // Красный
+      return '#f95758';
     }
   };
 
-  // Обработчик вывода баланса
   const handleWithdrawBalance = async () => {
-    setIsButtonPressed(true); // Устанавливаем состояние нажатия
+    setIsButtonPressed(true);
 
-    const token = '';
-    const FLASK_API_URL = `https://sled-bd-sled.amvera.io/api/records`;
-    const telegramId = Number(localStorage.getItem('telegramId'));
-
-    if (points < 500) {
+    if (points < 15000) {
       toast.info('Недостаточно средств для вывода. Требуется минимум 15000 баллов.');
-      setIsButtonPressed(false); // Сбрасываем состояние нажатия
+      setIsButtonPressed(false);
       return;
     }
 
     if (telegramId && points > 0) {
       try {
-        await axios.put(`${FLASK_API_URL}/chat/${telegramId}/balance/adjust`, { amount: ~~(points/500) }, {
+        await axios.put(`${BD_URL}/api/records/chat/${telegramId}/adjust`, {
+          amount: ~~(points / 1000)
+        }, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${SECRET_TOKEN}`
           }
         });
-
-        // Обнуление баланса в локальном хранилище
-        updateUserBalanceInLocalStorage(telegramId, 0);
         setPoints(0);
 
         toast.success('Баланс успешно выведен!');
-
       } catch (error) {
         console.error('Error adjusting user balance:', error);
         toast.error('Ошибка при выводе баланса.');
       } finally {
-        setIsButtonPressed(false); // Сбрасываем состояние нажатия
+        setIsButtonPressed(false);
       }
     } else {
       toast.info('Недостаточно средств для вывода.');
-      setIsButtonPressed(false); // Сбрасываем состояние нажатия
-    }
-  };
-
-  // Обновление баланса пользователя в localStorage
-  const updateUserBalanceInLocalStorage = (telegramId: number, newPoints: number) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const userIndex = users.findIndex((user: { telegramId: number }) => user.telegramId === telegramId);
-    if (userIndex !== -1) {
-      users[userIndex].points = newPoints;
-      localStorage.setItem('users', JSON.stringify(users));
+      setIsButtonPressed(false);
     }
   };
 
   if (!isAuthenticated) {
-    return <div>Loading...</div>; // Или другая заглушка на время проверки авторизации
+    return 1;
   }
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="home-container">
+      <ToastContainer limit={1} />
       <div className="absolute top top-block">
         <div className="block-energy">
-          <img src={highVoltage} width={44} height={44} alt="High Voltage" />
+          <img src={highVoltage} width={70} height={70} alt="High Voltage" />
         </div>
-        <div className="w-full bg-[#f9c035] rounded-full mt-2 border-energy">
+        <div className="w-full bg-[#F4C84B] rounded-full mt-3 border-energy">
           <div
             className="h-4 rounded-full transition-all duration-500"
             style={{
@@ -213,8 +234,6 @@ const Home = () => {
         </div>
       </div>
 
-
-
       <div className="absolute top midle-block">
         <div className="notc-block" onPointerDown={handlePointerDown}>
           <img
@@ -228,13 +247,19 @@ const Home = () => {
               key={click.id}
               className="absolute text-5xl font-bold opacity-0"
               style={{
-                top: `${click.y - 21}px`, // Уменьшаем позицию, так как картинка будет меньше
-                left: `${click.x - 14}px`, // Уменьшаем позицию, так как картинка будет меньше
+                top: `${click.y - 21}px`,
+                left: `${click.x - 14}px`,
                 animation: `float 1s ease-out`
               }}
               onAnimationEnd={() => handleAnimationEnd(click.id)}
             >
-              <img src={notcoin} width={56*0.8} height={56*0.8} alt="Coin" style={{ filter: 'invert(1)' }} />
+              <img
+                src={notcoin}
+                width={56 * 0.8}
+                height={56 * 0.8}
+                alt="Coin"
+                style={{ filter: 'invert(18%) sepia(91%) saturate(5678%) hue-rotate(8deg) brightness(93%) contrast(101%)' }}
+              />
             </div>
           ))}
         </div>
@@ -242,33 +267,45 @@ const Home = () => {
         <button
           className={`buttonvivod-button ${isButtonPressed ? 'pressed' : ''}`}
           onClick={handleWithdrawBalance}
-          // onMouseDown={() => setIsButtonPressed(true)}
-          // onMouseUp={() => setIsButtonPressed(false)}
-          // onMouseLeave={() => setIsButtonPressed(false)}
+          style={{ boxShadow: '0 4px 8px rgba(10, 10, 10, 0.5)' }}
         >
           Вывести
         </button>
 
         <div className="mt-14 text-2xl font-bold flex items-center balance-block">
-          <img src={coin} width={39} height={44} />
-          <span className="ml-2 txt-size">{points.toLocaleString()}</span>
+          <img src={coin} width={44} height={44} />
+          <span className="ml-4 txt-size flex justify-center items-center text-4xl">{points.toLocaleString()}</span>
         </div>
       </div>
-
 
       <div className="absolute top bottom-block">
         <div className="fixed bottom-0 left-0 w-full px-3 pb-3 z-22 navigatblock">
           <div className="w-full flex justify-between gap-2 navigat">
             <div className="flex-grow flex items-center max-w-80 text-sm">
               <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
-                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/frens')}>
-                  <img src={bear} width={24} height={24} alt="Frens" />
+                <button
+                  className={`flex flex-col items-center gap-1 ${isActive('/frens') ? '' : ''}`}
+                  onClick={() => handleButtonClick('/frens')}
+                >
+                  <img src={isActive('/frens') ? frens_inv : frens} width={24} height={24} alt="Frens" />
                 </button>
-                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/')}>
-                  <img src={coin} width={24} height={24} alt="Home" />
+
+                <div className="w-0.5 h-8 bg-gray-500 mt-2"></div>
+
+                <button
+                  className={`flex flex-col items-center gap-1 ${isActive('/') ? '' : ''}`}
+                  onClick={() => handleButtonClick('/')}
+                >
+                  <img src={isActive('/') ? home_inv : home} width={24} height={24} alt="Home" />
                 </button>
-                <button className="flex flex-col items-center gap-1" onClick={() => handleButtonClick('/boosts')}>
-                  <img src={rocket} width={24} height={24} alt="Boosts" />
+
+                <div className="w-0.5 h-8 bg-gray-500 mt-2"></div>
+
+                <button
+                  className={`flex flex-col items-center gap-1 ${isActive('/boosts') ? '' : ''}`}
+                  onClick={() => handleButtonClick('/boosts')}
+                >
+                  <img src={isActive('/boosts') ? task_inv : task} width={24} height={24} alt="Boosts" />
                 </button>
               </div>
             </div>

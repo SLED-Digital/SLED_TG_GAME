@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 // eslint-disable-next-line no-undef
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8101;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -107,25 +107,28 @@ app.post('/api/activate-invite', async (req, res) => {
 // Endpoint для коррекции баланса пользователя
 app.put('/api/records/chat/:telegramId/balance/adjust', async (req, res) => {
   const { telegramId } = req.params;
-  const { amount } = req.body;
+  const { amount, energy } = req.body;
 
-  if (!telegramId || !amount) {
-    return res.status(400).json({ error: 'Telegram ID and amount are required' });
+  // Преобразование telegramId из строки в число
+  const telegramIdNumber = Number(telegramId);
+
+  if (!telegramIdNumber || typeof amount !== 'number' || typeof energy !== 'number') {
+    return res.status(400).json({ error: 'Telegram ID, amount, and energy are required' });
   }
 
   try {
-    // Загрузка пользователей из JSON
     const users = await loadUsers();
-    const user = users.find((u) => u.telegramId === telegramId);
+    if (!Array.isArray(users)) {
+      throw new Error('Users is not an array');
+    }
+    const user = users.find((u) => u.telegramId === telegramIdNumber);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Коррекция баланса
     user.points = Math.max(0, user.points + amount);
-
-    // Сохранение изменений
+    user.energy = Math.max(0, energy);
     await saveUsers(users);
 
     res.status(200).json({ message: 'Balance adjusted successfully' });

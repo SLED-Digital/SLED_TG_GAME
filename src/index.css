@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.h-58 {
+  height: 58%;
+}
+
+.w-88 {
+  width: 90%;
+}
+
 html, body {
   height: 100%;
   overflow: hidden;
@@ -33,15 +41,16 @@ html, body {
 .block-energy {
   margin-top: 2%;
   margin-left: 2%;
-  border: 10px solid #FCAC17;
+  margin-right: 5%;
+  border: 10px solid #F4C84B;
   background-color: #FCAC17;
   border-radius: 18px;
   width: 4rem;
   /*margin-top: -35px;*/
 }
 .border-energy {
-  margin-top: -55px;
-  margin-left: 4.8rem;
+  margin-top: -60px;
+  margin-left: 5.6rem;
   /*margin-right: 3rem;*/
   width: 70%;
 }
@@ -50,8 +59,8 @@ html, body {
   display: inline-flex;
   align-items: center;
   position: absolute;
-  top: 2.0rem;
-  left: 4.3rem;
+  top: 2.2rem;
+  left: 5.3rem;
 }
 
 .energe-text {
@@ -87,7 +96,7 @@ html, body {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.2);
+    transform: scale(1.45);
   }
   100% {
     transform: scale(1);
@@ -292,6 +301,9 @@ button img {
   height: 45px; /* Обновленный размер высоты */
 }
 
+.red-shadow {
+  background: radial-gradient(circle, #f95758 0%, rgb(255, 255, 255) 60%);
+}
 
 
 
@@ -330,37 +342,25 @@ button img {
   align-items: center;
   /*justify-content: center;*/
   width: 100%;
-}
-
-
-
-.frens-top {
-  /* top: 0; */
-  width: 100%;
-  height: 30%;
-  margin-top: -10%;
-  /* width: 100%; */
-  background: #EDC448;
-  color: white;
   font-family: 'Montserrat', sans-serif; /* Добавляем шрифт Montserrat */
 }
 
 
 
 
-.frens-middle {
-  font-family: 'Montserrat', sans-serif; /* Добавляем шрифт Montserrat */
-  color: white;
-  background: #279E8B;
-  width: 100%;
-  top: 18%;
-  height: 55%;
-  border-radius: 30px;
-}
 
-.invite-text {
-  height: 60px;
-  width: 80%;
+/*.frens-middle {*/
+/*  font-family: 'Montserrat', sans-serif; !* Добавляем шрифт Montserrat *!*/
+/*  color: white;*/
+/*  background: #279E8B;*/
+/*  width: 100%;*/
+/*  top: 18%;*/
+/*  height: 55%;*/
+/*  border-radius: 30px;*/
+/*}*/
+
+.overflow-x-hidden {
+  overflow-x: hidden;
 }
 
 .active-code-block {
@@ -368,3 +368,38 @@ button img {
   margin-left: 10%;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.task-container {
+  min-height: 100vh; /* Полный видовой экран */
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+}
