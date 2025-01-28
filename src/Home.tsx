@@ -20,8 +20,9 @@ const Home = () => {
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const [telegramId, setTelegramId] = useState<number | null>(null);
   const SECRET_TOKEN = "kondrateVVV1987";
-  const BD_URL = "https://sled-bd-sled.amvera.io";
-  // const BD_URL = "http://127.0.0.1:5000";
+  // const BD_URL = "https://sled-bd-sled.amvera.io";
+  // const BD_URL = "https://172.17.0.4:8080";
+  const BD_URL = "https://server.sledd.ru:8080";
   const pointsToAdd = 10;
   const energyToReduce = 10;
   const navigate = useNavigate();
