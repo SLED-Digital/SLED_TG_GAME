@@ -1,0 +1,25 @@
+.background-page {
+  position: relative;
+  background-image: url('./start.png'); /* Укажите путь к вашей картинке */
+  background-size: auto 100%;  /* Картинка масштабируется по высоте контейнера */
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
+
+.content {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Центрирование контента по горизонтали */
+}
+
+.video {
+  height: 40%;
+  width: auto;
+  object-fit: cover;
+}
