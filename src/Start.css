@@ -1,16 +1,16 @@
 .background-page {
-  position: relative;
+  /*position: relative;*/
   background-image: url('./start.png'); /* Укажите путь к вашей картинке */
   background-size: auto 100%;  /* Картинка масштабируется по высоте контейнера */
   background-position: center;
   background-repeat: no-repeat;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 }
 
 .content {
   width: 100%;
-  position: absolute;
+  /*position: absolute;*/
   height: 100%;
   display: flex;
   flex-direction: column;
