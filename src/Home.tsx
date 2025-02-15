@@ -15,7 +15,7 @@ const Home = () => {
   const [points, setPoints] = useState(0);
   const [energy, setEnergy] = useState(500);
   const [clicks, setClicks] = useState<Click[]>([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [setIsAuthenticated] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isButtonPressed, setIsButtonPressed] = useState(false);
   const [telegramId, setTelegramId] = useState<number | null>(null);
@@ -103,7 +103,6 @@ const Home = () => {
       });
       const user = response.data.name;
       if (user) {
-        setIsAuthenticated(true);
 
         if (!localStorage.getItem('welcomeShown')) {
           toast.success('Добро пожаловать! Спасибо, что присоединились к нам.');
@@ -207,12 +206,8 @@ const Home = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return "User error";
-  }
-
-  const isActive = (path: string) => location.pathname === path;
-
+  // Вместо "User error" теперь возвращается базовая страница (шаблон) без данных
+  // При необходимости можно добавить лоадер или другие индикаторы загрузки
   return (
     <div className="home-container">
       <ToastContainer limit={1} />
@@ -231,7 +226,7 @@ const Home = () => {
         </div>
         <div className="ml-2 text-left farmer-number">
           <span className="energe-text text-2xl font-bold block textcolor-black">{energy}</span>
-          <span className="energe-text text-large opacity-65 textcolor-black">/  500</span>
+          <span className="energe-text text-large opacity-65 textcolor-black">/ 500</span>
         </div>
       </div>
 
@@ -285,28 +280,28 @@ const Home = () => {
             <div className="flex-grow flex items-center max-w-80 text-sm">
               <div className="w-full bg-[#249D8C] py-4 rounded-2xl flex justify-around">
                 <button
-                  className={`flex flex-col items-center gap-1 ${isActive('/frens') ? '' : ''}`}
+                  className={`flex flex-col items-center gap-1 ${location.pathname === '/frens' ? '' : ''}`}
                   onClick={() => handleButtonClick('/frens')}
                 >
-                  <img src={isActive('/frens') ? frens_inv : frens} width={24} height={24} alt="Frens" />
+                  <img src={location.pathname === '/frens' ? frens_inv : frens} width={24} height={24} alt="Frens" />
                 </button>
 
                 <div className="w-0.5 h-8 bg-gray-500 mt-2"></div>
 
                 <button
-                  className={`flex flex-col items-center gap-1 ${isActive('/') ? '' : ''}`}
+                  className={`flex flex-col items-center gap-1 ${location.pathname === '/' ? '' : ''}`}
                   onClick={() => handleButtonClick('/')}
                 >
-                  <img src={isActive('/') ? home_inv : home} width={24} height={24} alt="Home" />
+                  <img src={location.pathname === '/' ? home_inv : home} width={24} height={24} alt="Home" />
                 </button>
 
                 <div className="w-0.5 h-8 bg-gray-500 mt-2"></div>
 
                 <button
-                  className={`flex flex-col items-center gap-1 ${isActive('/boosts') ? '' : ''}`}
+                  className={`flex flex-col items-center gap-1 ${location.pathname === '/boosts' ? '' : ''}`}
                   onClick={() => handleButtonClick('/boosts')}
                 >
-                  <img src={isActive('/boosts') ? task_inv : task} width={24} height={24} alt="Boosts" />
+                  <img src={location.pathname === '/boosts' ? task_inv : task} width={24} height={24} alt="Boosts" />
                 </button>
               </div>
             </div>
