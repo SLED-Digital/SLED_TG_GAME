@@ -68,21 +68,22 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [energy, points]);
 
+  // Эффект для извлечения Telegram‑ID из URL или Telegram.WebApp
   useEffect(() => {
-    const user = Telegram.WebApp.initDataUnsafe.user;
-    const telegramIdFromTelegram = user ? user.id : null;
+    const telegramIdFromTelegram = Telegram?.WebApp?.initDataUnsafe?.user?.id;
     const telegramIdFromUrlNumber = telegramIdFromUrl ? Number(telegramIdFromUrl) : null;
-
-    const telegramId = telegramIdFromUrlNumber || telegramIdFromTelegram;
-    if (telegramId) {
-      checkUser(telegramId);
+    const id = telegramIdFromUrlNumber || telegramIdFromTelegram;
+    if (id) {
+      setTelegramId(id);
     } else {
       navigate('/login');
     }
-  }, [location, navigate, telegramIdFromUrl]);
+  }, [telegramIdFromUrl, navigate]);
 
+  // Эффект для проверки пользователя, когда Telegram‑ID уже получен
   useEffect(() => {
     if (telegramId) {
+      checkUser(telegramId);
       const storedData = localStorage.getItem(`user_${telegramId}`);
       if (storedData) {
         const { points: storedPoints, energy: storedEnergy } = JSON.parse(storedData);
@@ -100,10 +101,9 @@ const Home = () => {
           'Authorization': `Bearer ${SECRET_TOKEN}`
         }
       });
-      const user = response.data.username;
+      const user = response.data.name;
       if (user) {
         setIsAuthenticated(true);
-        setTelegramId(telegramId);
 
         if (!localStorage.getItem('welcomeShown')) {
           toast.success('Добро пожаловать! Спасибо, что присоединились к нам.');
@@ -116,7 +116,7 @@ const Home = () => {
           }
         }, 3000);
 
-        // Start sending data to server every minute
+        // Запускаем отправку данных на сервер каждую минуту
         setInterval(sendDataToServer, 60000);
       } else {
         console.error('User not found');
@@ -208,7 +208,7 @@ const Home = () => {
   };
 
   if (!isAuthenticated) {
-    return 1;
+    return "User error";
   }
 
   const isActive = (path: string) => location.pathname === path;
@@ -240,7 +240,7 @@ const Home = () => {
           <img
             src={notcoin}
             alt="notcoin"
-            className={`notc-width ${isClicked ? 'click-animation' : ''} `}
+            className={`notc-width ${isClicked ? 'click-animation' : ''}`}
             onAnimationEnd={() => setIsClicked(false)}
           />
           {clicks.map((click) => (
