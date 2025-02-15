@@ -21,7 +21,7 @@ const Home = () => {
   const [telegramId, setTelegramId] = useState<number | null>(null);
   const SECRET_TOKEN = "kondrateVVV1987";
   // const BD_URL = "https://sled-bd-sled.amvera.io";
-  // const BD_URL = "https://172.17.0.4:8080";
+  // const BD_URL = "https://localhost:8080";
   const BD_URL = "https://server.sledd.ru:8080";
   const pointsToAdd = 10;
   const energyToReduce = 10;
@@ -100,7 +100,7 @@ const Home = () => {
           'Authorization': `Bearer ${SECRET_TOKEN}`
         }
       });
-      const user = response.data.user;
+      const user = response.data.username;
       if (user) {
         setIsAuthenticated(true);
         setTelegramId(telegramId);
