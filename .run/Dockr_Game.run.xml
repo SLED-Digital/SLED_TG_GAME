@@ -3,7 +3,7 @@
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="sledd-tg-game" />
-        <option name="containerName" value="SLED-GAME" />
+        <option name="containerName" value="SLED_TG_GAME" />
         <option name="commandLineOptions" value="--restart=always -p 8101:8101" />
         <option name="sourceFilePath" value="Dockerfile" />
       </settings>
