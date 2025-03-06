@@ -14,14 +14,10 @@ const app = express();
 // eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 8101;
 
-// Пути к SSL-сертификатам
-const SSL_CERT_PATH = 'ssl/server_combined.pem';
-const SSL_KEY_PATH = 'ssl/server.sledd.ru-key.pem';
-
 // Настройка SSL
 const sslOptions = {
-  key: await fs.readFile(SSL_KEY_PATH),
-  cert: await fs.readFile(SSL_CERT_PATH),
+  key: fs.readFileSync("/etc/letsencrypt/live/server.sledd.ru/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/server.sledd.ru/fullchain.pem"),
 };
 
 // Настройка middleware
